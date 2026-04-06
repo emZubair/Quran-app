@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "scheme": "quran-app",
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      "expo-font"
+    ]
   }
 }
