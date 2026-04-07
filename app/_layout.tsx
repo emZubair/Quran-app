@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { ActivityIndicator, View } from "react-native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
 import { useBookmarkStore } from "../stores/bookmarkStore";
 import { useSettingsStore } from "../stores/settingsStore";
 import { useThemeColors } from "../hooks/useThemeColors";
@@ -11,10 +13,22 @@ export default function RootLayout() {
   const darkMode = useSettingsStore((s) => s.darkMode);
   const colors = useThemeColors();
 
+  const [fontsLoaded] = useFonts({
+    IndopakNastaleeq: require("../assets/fonts/IndopakNastaleeq.ttf"),
+  });
+
   useEffect(() => {
     loadBookmarks();
     loadSettings();
   }, []);
+
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#2E7D32" />
+      </View>
+    );
+  }
 
   return (
     <>

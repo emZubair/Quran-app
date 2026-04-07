@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-
-const API_BASE = "https://api.alquran.cloud/v1";
+import quranData from "../data/quran-data.json";
 
 export interface AyahWord {
   index: number;
@@ -15,6 +14,16 @@ export interface Ayah {
   translation?: string;
 }
 
+interface RawSurah {
+  number: number;
+  ayahs: {
+    number: number;
+    numberInSurah: number;
+    text: string;
+    translation: string;
+  }[];
+}
+
 function splitArabicIntoWords(text: string): AyahWord[] {
   return text
     .trim()
@@ -22,59 +31,41 @@ function splitArabicIntoWords(text: string): AyahWord[] {
     .map((word, index) => ({ index, text: word }));
 }
 
-export function useQuranData(surahNumber: number, translationEdition = "en.asad") {
+export function useQuranData(surahNumber: number) {
   const [ayahs, setAyahs] = useState<Ayah[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
     setLoading(true);
     setError(null);
 
-    async function fetchSurah() {
-      try {
-        const [arabicRes, translationRes] = await Promise.all([
-          fetch(`${API_BASE}/surah/${surahNumber}/quran-uthmani`),
-          fetch(`${API_BASE}/surah/${surahNumber}/${translationEdition}`),
-        ]);
+    try {
+      const surah = (quranData as Record<string, RawSurah>)[
+        surahNumber.toString()
+      ];
 
-        const arabicData = await arabicRes.json();
-        const translationData = await translationRes.json();
-
-        if (cancelled) return;
-
-        if (arabicData.code !== 200 || translationData.code !== 200) {
-          setError("Failed to fetch surah data");
-          return;
-        }
-
-        const arabicAyahs = arabicData.data.ayahs;
-        const translationAyahs = translationData.data.ayahs;
-
-        const merged: Ayah[] = arabicAyahs.map((a: any, i: number) => ({
-          number: a.number,
-          numberInSurah: a.numberInSurah,
-          text: a.text,
-          words: splitArabicIntoWords(a.text),
-          translation: translationAyahs[i]?.text,
-        }));
-
-        setAyahs(merged);
-      } catch (e: any) {
-        if (!cancelled) {
-          setError(e.message || "Network error");
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
+      if (!surah) {
+        setError("Surah not found");
+        setLoading(false);
+        return;
       }
-    }
 
-    fetchSurah();
-    return () => {
-      cancelled = true;
-    };
-  }, [surahNumber, translationEdition]);
+      const merged: Ayah[] = surah.ayahs.map((a) => ({
+        number: a.number,
+        numberInSurah: a.numberInSurah,
+        text: a.text,
+        words: splitArabicIntoWords(a.text),
+        translation: a.translation,
+      }));
+
+      setAyahs(merged);
+    } catch (e: any) {
+      setError(e.message || "Failed to load surah");
+    } finally {
+      setLoading(false);
+    }
+  }, [surahNumber]);
 
   return { ayahs, loading, error };
 }
