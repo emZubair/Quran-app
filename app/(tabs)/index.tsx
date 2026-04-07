@@ -28,12 +28,15 @@ export default function SurahListScreen() {
       (s) =>
         s.englishName.toLowerCase().includes(q) ||
         s.name.includes(search) ||
-        s.number.toString() === q
+        s.number.toString() === q,
     );
   }, [search]);
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={["top"]}>
+    <SafeAreaView
+      style={[styles.safe, { backgroundColor: colors.background }]}
+      edges={["top"]}
+    >
       <View style={[styles.header, { backgroundColor: colors.primary }]}>
         <Text style={styles.title}>القرآن الكريم</Text>
         <Text style={styles.subtitle}>The Noble Quran</Text>
@@ -41,7 +44,13 @@ export default function SurahListScreen() {
 
       {lastReadSurah && (
         <Pressable
-          style={[styles.lastRead, { backgroundColor: colors.primaryLighter, borderBottomColor: colors.primaryLight }]}
+          style={[
+            styles.lastRead,
+            {
+              backgroundColor: colors.primaryLighter,
+              borderBottomColor: colors.primaryLight,
+            },
+          ]}
           onPress={() => router.push(`/surah/${lastReadSurah}`)}
         >
           <Text style={[styles.lastReadText, { color: colors.primary }]}>
@@ -50,7 +59,9 @@ export default function SurahListScreen() {
         </Pressable>
       )}
 
-      <View style={[styles.searchContainer, { backgroundColor: colors.searchBg }]}>
+      <View
+        style={[styles.searchContainer, { backgroundColor: colors.searchBg }]}
+      >
         <TextInput
           ref={searchRef}
           style={[styles.searchInput, { color: colors.text }]}
@@ -68,7 +79,9 @@ export default function SurahListScreen() {
               searchRef.current?.focus();
             }}
           >
-            <Text style={[styles.clearBtnText, { color: colors.textMuted }]}>✕</Text>
+            <Text style={[styles.clearBtnText, { color: colors.textMuted }]}>
+              ✕
+            </Text>
           </Pressable>
         )}
       </View>

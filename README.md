@@ -1,5 +1,7 @@
 # القرآن الكريم — Quran App
 
+[![CI](https://github.com/emZubair/Quran-app/actions/workflows/ci.yml/badge.svg)](https://github.com/emZubair/Quran-app/actions/workflows/ci.yml)
+
 A cross-platform Quran reader built with **Expo (React Native)** that runs on iOS, Android, and Web from a single codebase. Features tappable word-level Arabic text (designed for future word-by-word meanings), bookmarking, search, and a responsive layout that adapts to any screen size.
 
 ---
@@ -20,16 +22,16 @@ A cross-platform Quran reader built with **Expo (React Native)** that runs on iO
 
 ## Tech Stack
 
-| Layer           | Technology                                  |
-| --------------- | ------------------------------------------- |
-| Framework       | [Expo](https://expo.dev) (SDK 54)           |
-| Language        | TypeScript (strict mode)                    |
-| Navigation      | [Expo Router](https://docs.expo.dev/router) |
-| State           | [Zustand](https://zustand.docs.pmnd.rs)     |
-| Persistence     | AsyncStorage                                |
-| Quran Data API  | [alquran.cloud](https://alquran.cloud/api)  |
-| Audio (planned) | expo-av                                     |
-| Local DB (planned) | expo-sqlite                              |
+| Layer              | Technology                                  |
+| ------------------ | ------------------------------------------- |
+| Framework          | [Expo](https://expo.dev) (SDK 54)           |
+| Language           | TypeScript (strict mode)                    |
+| Navigation         | [Expo Router](https://docs.expo.dev/router) |
+| State              | [Zustand](https://zustand.docs.pmnd.rs)     |
+| Persistence        | AsyncStorage                                |
+| Quran Data API     | [alquran.cloud](https://alquran.cloud/api)  |
+| Audio (planned)    | expo-av                                     |
+| Local DB (planned) | expo-sqlite                                 |
 
 ---
 
@@ -98,11 +100,11 @@ bun start
 
 This opens the Expo Dev Tools. From there:
 
-| Platform | Command                    | Requirement                          |
-| -------- | -------------------------- | ------------------------------------ |
-| iOS      | Press `i` or `bun run ios`     | macOS + Xcode + iOS Simulator        |
-| Android  | Press `a` or `bun run android` | Android Studio + Emulator or device  |
-| Web      | Press `w` or `bun run web`     | Any modern browser                   |
+| Platform | Command                        | Requirement                         |
+| -------- | ------------------------------ | ----------------------------------- |
+| iOS      | Press `i` or `bun run ios`     | macOS + Xcode + iOS Simulator       |
+| Android  | Press `a` or `bun run android` | Android Studio + Emulator or device |
+| Web      | Press `w` or `bun run web`     | Any modern browser                  |
 
 ### 3. Run on a physical device
 
@@ -170,6 +172,7 @@ eas submit --platform ios
 ```
 
 You'll need:
+
 - Apple Developer account
 - App created in [App Store Connect](https://appstoreconnect.apple.com)
 - App metadata (description, screenshots, etc.) filled in
@@ -182,6 +185,7 @@ eas submit --platform android
 ```
 
 You'll need:
+
 - Google Play Developer account ($25 one-time fee)
 - App created in [Google Play Console](https://play.google.com/console)
 - A service account JSON key for automated uploads (see [EAS Submit docs](https://docs.expo.dev/submit/android/))
@@ -216,10 +220,10 @@ Users receive the update on next app launch. See [EAS Update docs](https://docs.
 
 ## Environment & Configuration
 
-| File          | Purpose                                                    |
-| ------------- | ---------------------------------------------------------- |
-| `app.json`    | Expo config: app name, icons, splash, platform settings    |
-| `eas.json`    | EAS Build profiles (created by `eas build:configure`)      |
+| File            | Purpose                                                 |
+| --------------- | ------------------------------------------------------- |
+| `app.json`      | Expo config: app name, icons, splash, platform settings |
+| `eas.json`      | EAS Build profiles (created by `eas build:configure`)   |
 | `tsconfig.json` | TypeScript with strict mode, extends Expo's base config |
 
 ---

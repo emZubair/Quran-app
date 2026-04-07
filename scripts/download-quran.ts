@@ -65,8 +65,12 @@ async function main() {
   const json = JSON.stringify(allSurahs);
   await Bun.write(OUTPUT_PATH, json);
 
-  const sizeMB = (new TextEncoder().encode(json).length / 1024 / 1024).toFixed(2);
-  console.log(`\n✅ Saved ${OUTPUT_PATH} (${sizeMB} MB) — 114 surahs, 6236 ayahs`);
+  const sizeMB = (new TextEncoder().encode(json).length / 1024 / 1024).toFixed(
+    2,
+  );
+  console.log(
+    `\n✅ Saved ${OUTPUT_PATH} (${sizeMB} MB) — 114 surahs, 6236 ayahs`,
+  );
 }
 
 main().catch((e) => {

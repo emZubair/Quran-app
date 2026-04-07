@@ -17,6 +17,7 @@ A cross-platform Quran reader built with Expo (React Native) + TypeScript. Runs 
 ## Architecture
 
 ### File-based routing (`app/`)
+
 - `app/_layout.tsx` — Root Stack navigator, loads persisted state on mount
 - `app/(tabs)/` — Bottom tab navigator with 3 tabs
   - `index.tsx` — Surah list with search and last-read banner
@@ -25,15 +26,18 @@ A cross-platform Quran reader built with Expo (React Native) + TypeScript. Runs 
 - `app/surah/[id].tsx` — Surah reader screen (dynamic route)
 
 ### Components (`components/`)
+
 - `WordToken.tsx` — Single tappable Arabic word. This is the core interaction unit; every Arabic word renders as its own `<Pressable>`. Future word-meaning feature hooks into the `onPress` callback here.
 - `AyahView.tsx` — Renders one ayah as a row of WordTokens (RTL flex-wrap) + optional translation text below.
 - `SurahListItem.tsx` — Row component for the surah list.
 
 ### Data Layer
+
 - `data/quranMeta.ts` — Static array of all 114 surah metadata (name, englishName, ayah count, revelation type). This is the source of truth for surah info; no API call needed for listing.
 - `hooks/useQuranData.ts` — React hook that fetches Arabic text + English translation from the API, splits Arabic into word-level tokens. Returns `{ ayahs, loading, error }`.
 
 ### State Stores (`stores/`)
+
 - `bookmarkStore.ts` — Manages bookmarks array and lastRead position. Persists to AsyncStorage on every mutation.
 - `settingsStore.ts` — Manages fontSize, showTranslation, translationLanguage. Persists to AsyncStorage.
 

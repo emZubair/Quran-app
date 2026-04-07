@@ -22,7 +22,12 @@ export function WordToken({ text, wordIndex, onPress }: WordTokenProps) {
       onPress={() => onPress?.(wordIndex, text)}
       style={({ pressed }) => [styles.word, pressed && styles.wordPressed]}
     >
-      <Text style={[styles.wordText, { fontSize, color: colors.text, fontFamily, lineHeight }]}>
+      <Text
+        style={[
+          styles.wordText,
+          { fontSize, color: colors.text, fontFamily, lineHeight },
+        ]}
+      >
         {text}
       </Text>
     </Pressable>

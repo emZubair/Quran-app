@@ -6,7 +6,21 @@
     "start": "bunx expo start",
     "android": "bunx expo start --android",
     "ios": "bunx expo start --ios",
-    "web": "bunx expo start --web"
+    "web": "bunx expo start --web",
+    "lint": "bunx eslint .",
+    "format": "bunx prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "format:check": "bunx prettier --check \"**/*.{ts,tsx,json,md}\"",
+    "typecheck": "bunx tsc --noEmit",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@expo/metro-runtime": "~55.0.9",
@@ -30,6 +44,11 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.10",
+    "eslint": "^9",
+    "eslint-config-expo": "^55.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.1",
     "typescript": "~5.9.2"
   },
   "private": true

@@ -1,7 +1,11 @@
 import React from "react";
 import { View, Text, Switch, Pressable, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSettingsStore, ARABIC_FONT_OPTIONS, ArabicFont } from "../../stores/settingsStore";
+import {
+  useSettingsStore,
+  ARABIC_FONT_OPTIONS,
+  ArabicFont,
+} from "../../stores/settingsStore";
 import { useThemeColors } from "../../hooks/useThemeColors";
 
 export default function SettingsScreen() {
@@ -42,7 +46,8 @@ export default function SettingsScreen() {
                   {
                     color: colors.text,
                     fontSize,
-                    fontFamily: arabicFont === "default" ? undefined : arabicFont,
+                    fontFamily:
+                      arabicFont === "default" ? undefined : arabicFont,
                   },
                 ]}
                 numberOfLines={1}
@@ -95,9 +100,7 @@ export default function SettingsScreen() {
                     ? colors.primaryLighter
                     : "transparent",
                 borderColor:
-                  arabicFont === option.value
-                    ? colors.primary
-                    : colors.border,
+                  arabicFont === option.value ? colors.primary : colors.border,
               },
             ]}
             onPress={() => setArabicFont(option.value)}
@@ -107,9 +110,7 @@ export default function SettingsScreen() {
                 styles.fontOptionLabel,
                 {
                   color:
-                    arabicFont === option.value
-                      ? colors.primary
-                      : colors.text,
+                    arabicFont === option.value ? colors.primary : colors.text,
                   fontWeight: arabicFont === option.value ? "700" : "400",
                 },
               ]}

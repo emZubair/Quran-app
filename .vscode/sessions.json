@@ -1,0 +1,44 @@
+{
+  "$schema": "https://cdn.statically.io/gh/nguyenngoclongdev/cdn/main/schema/v11/terminal-keeper.json",
+  "theme": "tribe",
+  "active": "default",
+  "activateOnStartup": true,
+  "keepExistingTerminals": false,
+  "sessions": {
+    "default": [
+      {
+        "name": "git",
+        "autoExecuteCommands": true,
+        "icon": "github-inverted",
+        "color": "terminal.ansiGreen",
+        "commands": ["git branch"]
+      },
+      [
+        {
+          "icon": "debug-console",
+          "name": "make-shell",
+          "commands": [""]
+        },
+        {
+          "icon": "debug",
+          "name": "make-attach",
+          "commands": [""]
+        }
+      ],
+      [
+        {
+          "name": "Helper",
+          "icon": "vr",
+          "commands": [""]
+        }
+      ],
+      [
+        {
+          "name": "Space",
+          "icon": "github-alt",
+          "commands": [""]
+        }
+      ]
+    ]
+  }
+}
