@@ -36,7 +36,7 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
 
   removeBookmark: (surahNumber, pageNumber) => {
     const updated = get().bookmarks.filter(
-      (b) => !(b.surahNumber === surahNumber && b.pageNumber === pageNumber)
+      (b) => !(b.surahNumber === surahNumber && b.pageNumber === pageNumber),
     );
     set({ bookmarks: updated });
     AsyncStorage.setItem(BOOKMARKS_KEY, JSON.stringify(updated));
@@ -44,7 +44,7 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
 
   isBookmarked: (surahNumber, pageNumber) => {
     return get().bookmarks.some(
-      (b) => b.surahNumber === surahNumber && b.pageNumber === pageNumber
+      (b) => b.surahNumber === surahNumber && b.pageNumber === pageNumber,
     );
   },
 
@@ -52,7 +52,7 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
     set({ lastReadSurah: surahNumber, lastReadPage: pageNumber });
     AsyncStorage.setItem(
       LAST_READ_KEY,
-      JSON.stringify({ surahNumber, pageNumber })
+      JSON.stringify({ surahNumber, pageNumber }),
     );
   },
 

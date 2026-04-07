@@ -41,7 +41,10 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="surah/[id]" options={{ headerBackTitle: "Back", headerBackVisible: true }} />
+        <Stack.Screen
+          name="surah/[id]"
+          options={{ headerBackTitle: "Back", headerBackVisible: true }}
+        />
       </Stack>
     </>
   );

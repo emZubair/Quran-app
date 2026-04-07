@@ -32,7 +32,9 @@ export function AyahView({ ayah, onWordPress }: AyahViewProps) {
       </View>
 
       {showTranslation && ayah.translation && (
-        <Text style={[styles.translation, { color: colors.translationText }]}>{ayah.translation}</Text>
+        <Text style={[styles.translation, { color: colors.translationText }]}>
+          {ayah.translation}
+        </Text>
       )}
     </View>
   );

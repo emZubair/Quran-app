@@ -20,20 +20,30 @@ export function SurahListItem({ surah, onPress }: SurahListItemProps) {
         pressed && { backgroundColor: colors.surfacePressed },
       ]}
     >
-      <View style={[styles.numberBadge, { backgroundColor: colors.primaryLighter }]}>
-        <Text style={[styles.numberText, { color: colors.primary }]}>{surah.number}</Text>
+      <View
+        style={[styles.numberBadge, { backgroundColor: colors.primaryLighter }]}
+      >
+        <Text style={[styles.numberText, { color: colors.primary }]}>
+          {surah.number}
+        </Text>
       </View>
 
       <View style={styles.info}>
-        <Text style={[styles.englishName, { color: colors.text }]}>{surah.englishName}</Text>
+        <Text style={[styles.englishName, { color: colors.text }]}>
+          {surah.englishName}
+        </Text>
         <Text style={[styles.meta, { color: colors.textMuted }]}>
           {surah.englishTranslation} • {surah.numberOfAyahs} Ayahs
         </Text>
       </View>
 
       <View style={styles.arabicContainer}>
-        <Text style={[styles.arabicName, { color: colors.primary }]}>{surah.name}</Text>
-        <Text style={[styles.revelationType, { color: colors.textMuted }]}>{surah.revelationType}</Text>
+        <Text style={[styles.arabicName, { color: colors.primary }]}>
+          {surah.name}
+        </Text>
+        <Text style={[styles.revelationType, { color: colors.textMuted }]}>
+          {surah.revelationType}
+        </Text>
       </View>
     </Pressable>
   );

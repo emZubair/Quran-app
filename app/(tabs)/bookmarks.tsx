@@ -12,7 +12,7 @@ export default function BookmarksScreen() {
   const removeBookmark = useBookmarkStore((s) => s.removeBookmark);
 
   const sortedBookmarks = [...bookmarks].sort(
-    (a, b) => b.timestamp - a.timestamp
+    (a, b) => b.timestamp - a.timestamp,
   );
 
   function renderBookmark({ item }: { item: Bookmark }) {
@@ -26,7 +26,9 @@ export default function BookmarksScreen() {
         onPress={() => router.push(`/surah/${item.surahNumber}`)}
       >
         <View style={styles.info}>
-          <Text style={[styles.surahName, { color: colors.text }]}>{item.surahName}</Text>
+          <Text style={[styles.surahName, { color: colors.text }]}>
+            {item.surahName}
+          </Text>
           <Text style={[styles.meta, { color: colors.textMuted }]}>
             Surah {item.surahNumber} • Page {item.pageNumber}
           </Text>
@@ -39,14 +41,19 @@ export default function BookmarksScreen() {
           style={styles.removeBtn}
           onPress={() => removeBookmark(item.surahNumber, item.pageNumber)}
         >
-          <Text style={[styles.removeText, { color: colors.textMuted }]}>✕</Text>
+          <Text style={[styles.removeText, { color: colors.textMuted }]}>
+            ✕
+          </Text>
         </Pressable>
       </Pressable>
     );
   }
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={["top"]}>
+    <SafeAreaView
+      style={[styles.safe, { backgroundColor: colors.background }]}
+      edges={["top"]}
+    >
       <View style={[styles.header, { backgroundColor: colors.primary }]}>
         <Text style={styles.title}>🔖 Bookmarks</Text>
       </View>
@@ -54,7 +61,9 @@ export default function BookmarksScreen() {
       {sortedBookmarks.length === 0 ? (
         <View style={styles.empty}>
           <Text style={styles.emptyIcon}>🔖</Text>
-          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>No bookmarks yet</Text>
+          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+            No bookmarks yet
+          </Text>
           <Text style={[styles.emptySubtext, { color: colors.textMuted }]}>
             Tap the bookmark icon while reading a surah to save your place.
           </Text>

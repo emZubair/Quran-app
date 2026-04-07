@@ -59,8 +59,13 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   loadSettings: async () => {
     const json = await AsyncStorage.getItem(SETTINGS_KEY);
     if (json) {
-      const { fontSize, showTranslation, translationLanguage, darkMode, arabicFont } =
-        JSON.parse(json);
+      const {
+        fontSize,
+        showTranslation,
+        translationLanguage,
+        darkMode,
+        arabicFont,
+      } = JSON.parse(json);
       set({
         fontSize,
         showTranslation,
@@ -81,6 +86,6 @@ function persistSettings(state: SettingsState) {
       translationLanguage: state.translationLanguage,
       darkMode: state.darkMode,
       arabicFont: state.arabicFont,
-    })
+    }),
   );
 }

@@ -54,11 +54,21 @@ export default function SurahScreen() {
   function renderHeader() {
     if (!surah) return null;
     return (
-      <View style={[styles.surahHeader, { backgroundColor: colors.primaryLighter, borderBottomColor: colors.primaryLight }]}>
+      <View
+        style={[
+          styles.surahHeader,
+          {
+            backgroundColor: colors.primaryLighter,
+            borderBottomColor: colors.primaryLight,
+          },
+        ]}
+      >
         <Text style={[styles.bismillah, { color: colors.primary }]}>
           {surahNumber !== 9 ? "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" : ""}
         </Text>
-        <Text style={[styles.surahTitle, { color: colors.text }]}>{surah.name}</Text>
+        <Text style={[styles.surahTitle, { color: colors.text }]}>
+          {surah.name}
+        </Text>
         <Text style={[styles.surahEnglish, { color: colors.textSecondary }]}>
           {surah.englishName} — {surah.englishTranslation}
         </Text>
@@ -84,7 +94,9 @@ export default function SurahScreen() {
         />
         <View style={[styles.center, { backgroundColor: colors.background }]}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={[styles.loadingText, { color: colors.textMuted }]}>Loading surah...</Text>
+          <Text style={[styles.loadingText, { color: colors.textMuted }]}>
+            Loading surah...
+          </Text>
         </View>
       </>
     );
@@ -138,7 +150,10 @@ export default function SurahScreen() {
         ListHeaderComponent={renderHeader}
         contentContainerStyle={[
           styles.list,
-          { paddingHorizontal: width > 768 ? width * 0.1 : 0, backgroundColor: colors.background },
+          {
+            paddingHorizontal: width > 768 ? width * 0.1 : 0,
+            backgroundColor: colors.background,
+          },
         ]}
       />
     </>
