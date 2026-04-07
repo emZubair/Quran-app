@@ -239,7 +239,7 @@ The app fetches Quran data from the **Al Quran Cloud API** (free, no API key req
 
 - [ ] Word-by-word meanings popup on tap
 - [ ] Audio recitation playback (expo-av)
-- [ ] Offline mode with bundled SQLite database
+- [x] Offline mode with bundled Quran data
 - [ ] Multiple translation languages
 - [x] Dark mode / theming
 - [ ] Juz / Para navigation
