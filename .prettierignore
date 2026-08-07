@@ -4,3 +4,6 @@ data/quran-data.json
 
 # Build output
 dist/
+
+# Vendored design references — not app code.
+design_handoff_*/

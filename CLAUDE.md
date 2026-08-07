@@ -12,44 +12,55 @@ A fully offline, ad-free, cross-platform Quran reader built with Expo (React Nat
 - **State Management:** Zustand (stores in `stores/`)
 - **Persistence:** @react-native-async-storage/async-storage
 - **Quran Data:** bundled `data/quran-data.json` (~2.4 MB) — Tanzil Imlaei/standard text (`quran-simple`) + Pickthall English translation, compiled at build time via the Al Quran Cloud API. The Imlaei edition writes long ā with a full alef (e.g. الكافرين) rather than the Uthmani fatha+dagger-alef; this was a deliberate choice to avoid the stacked-mark look. Switch editions by passing an arg to the download script.
-- **Fonts:** expo-font with bundled Amiri Quran (`assets/fonts/AmiriQuran-Regular.ttf`, SIL OFL — license in `assets/fonts/OFL.txt`). A Quran-grade Naskh font that positions all harakat correctly. The old IndoPak font was removed because it mis-stacked marks (it expected IndoPak-encoded text, not the Tanzil encoding).
+- **Fonts:** expo-font, all bundled, all SIL OFL (licences in `assets/fonts/OFL-*.txt`). Amiri Quran for Arabic — a Quran-grade Naskh that positions all harakat correctly (the old IndoPak font was removed because it mis-stacked marks: it expected IndoPak-encoded text, not the Tanzil encoding). Newsreader (Regular/SemiBold/Italic) and Plus Jakarta Sans (400–800) for UI, added in the redesign. RN does not synthesise weights, so each weight is its own face — see `lib/fonts.ts` for the keys and never pair `fontWeight` with them. The static instances were cut from the Google variable fonts with `fonttools varLib.instancer` (Newsreader pinned at `opsz=16`); Google's own repo now ships only variable files.
 
 ## Architecture
 
 ### File-based routing (`app/`)
 
-- `app/_layout.tsx` — Root Stack navigator; loads persisted state and the Arabic font on mount
-- `app/(tabs)/` — Bottom tab navigator with 3 tabs
-  - `index.tsx` — Surah list with search and last-read banner
-  - `bookmarks.tsx` — Bookmark management
-  - `settings.tsx` — Font size, Arabic font, translation toggle, dark mode, about/attribution
-- `app/surah/[id].tsx` — Surah reader screen (dynamic route)
+- `app/_layout.tsx` — Root Stack navigator; loads persisted state and all fonts on mount. `headerShown: false` throughout — screens own their chrome.
+- `app/(tabs)/` — Bottom tab navigator with 4 tabs
+  - `index.tsx` — Home: greeting + Hijri date, Continue/Resume card, ayah of the day, streak week
+  - `read.tsx` — launcher, not a screen: on focus it flips the tab back to Home and pushes the reader at `lastRead`, so dismissing the reader does not re-trigger it
+  - `browse.tsx` — juz / surah / page / bookmarks, with search that accepts an `s:a` reference
+  - `settings.tsx` — grouped cards; the About/attribution block is load-bearing for store listings
+- `app/surah/[id].tsx` — reader (dynamic route), accepts an optional `?ayah=` param
 
 ### Components (`components/`)
 
-- `WordToken.tsx` — Single tappable Arabic word. This is the core interaction unit; every Arabic word renders as its own `<Pressable>`. Future word-meaning feature hooks into the `onPress` callback here.
-- `AyahView.tsx` — Renders one ayah as a row of WordTokens (RTL flex-wrap) + optional translation text below.
-- `SurahListItem.tsx` — Row component for the surah list.
+- `reader/ArabicFlow.tsx` — the core text renderer. Renders a run of ayahs as **one continuous RTL `<Text>`** with each word a nested pressable `<Text>`. This replaced the old flex-row-of-`<Pressable>` approach, which could not line-break. Ayah numerals are inline via U+06DD (Amiri shapes the digits inside the glyph) because a bordered `<View>` cannot sit in a text run and nested-`<Text>` borders do not render on Android.
+- `reader/AyahBlock.tsx` — Practice's per-ayah block: reference tag, action marks, Arabic, inline word card, translations.
+- `reader/WordSheet.tsx` — Mushaf's bottom sheet for word meanings.
+- `reader/ReaderBar.tsx`, `reader/SurahHeader.tsx` — reader chrome.
+- `ui/Primitives.tsx` — Card, Overline, Divider, ProgressBar, CheckCircle, Ornament, and `ProgressRing` (two rotated half-discs behind a centre disc; deliberately no `react-native-svg`).
+- `ui/Switch.tsx`, `ui/Slider.tsx` — custom controls. The platform `<Switch>` cannot be styled to the 46×28 spec, and the slider is PanResponder-based to avoid a package.
 
 ### Data Layer
 
 - `data/quranMeta.ts` — Static array of all 114 surah metadata (name, englishName, ayah count, revelation type). Source of truth for surah info.
+- `data/juzMeta.ts` — The 30 juz (Arabic + transliterated name, inclusive start/end refs), plus absolute-ayah arithmetic (`absoluteAyah`, `ayahFromAbsolute`, `juzForAyah`, `juzProgress`). Boundaries were hand-authored and verified against the Al Quran Cloud metadata endpoint — all 30 match, and they tile ayahs 1–6236 with no gap or overlap.
+- `data/pageMeta.ts` — Start ref of each of the 604 Madani mushaf pages, generated from the same metadata endpoint. `pageForAyah` binary-searches it.
 - `data/quran-data.json` — The complete Quran: Arabic text + English translation for all 6,236 ayahs. Imported statically (bundled into the JS bundle).
 - `scripts/download-quran.ts` — Regenerates quran-data.json from alquran.cloud (`bun run scripts/download-quran.ts [translation-edition] [arabic-edition]`, defaults `en.pickthall quran-simple`). Strips the embedded Bismillah from first ayahs, strips BOMs, and validates surah/ayah counts (must be exactly 112 strips) before writing. Excluded from tsconfig (uses Bun globals).
 - `hooks/useQuranData.ts` — Reads one surah from the bundled JSON, splits Arabic into word-level tokens. Returns `{ ayahs, loading, error }`. No network.
-- `hooks/useThemeColors.ts` — Returns the light or dark palette based on the darkMode setting. All screen colors flow through this.
+- `hooks/useThemeColors.ts` — Returns the token set for the active theme, plus `useTajweedColors` and `useThemeMetrics` (gutters, radii, nav-mark geometry). All screen colours flow through this; no component holds a literal hex.
+- `hooks/useWordMeaning.ts` — Word-by-word gloss lookup. **Returns `null` by design**: no gloss dataset is bundled yet, because sourcing one with a licence compatible with a closed-source store build is still open (the obvious candidate, the Quranic Arabic Corpus, is GPL). The word sheet and inline card are fully built against it and render an empty state. Adding data later is a drop-in change.
+- `lib/fonts.ts` — font family keys, asset map, per-theme display fonts, `arabicLineHeight`, and the mono `overline()` helper.
+- `lib/hijri.ts` — tabular ("civil") Islamic calendar conversion for the Home overline. Arithmetic only, no lookup table and no `Intl` — Hermes cannot be relied on for the Umm al-Qura calendar. It can differ from the observed date by a day; fine for a greeting, not for anything canonical.
 
 ### State Stores (`stores/`)
 
-- `bookmarkStore.ts` — Manages bookmarks array and lastRead position. Persists to AsyncStorage on every mutation.
-- `settingsStore.ts` — Manages fontSize, showTranslation, translationLanguage, darkMode, arabicFont. Persists to AsyncStorage.
+- `bookmarkStore.ts` — Ayah-level bookmarks and `lastRead: {surah, ayah}`. Persists on every mutation, and migrates v1 payloads on load (surah-level bookmarks with a hardcoded `pageNumber: 1`, and the old `{surahNumber, pageNumber}` lastRead).
+- `settingsStore.ts` — fontSize, showTranslation, arabicFont, theme, tajweed, wordMeanings, translations, dailyGoalMinutes, reminder. `loadSettings` migrates the old `darkMode: true` to `theme: "practice"`.
+- `streakStore.ts` — `days: Record<ISO date, seconds>` plus current/longest streak. A day counts once `seconds >= dailyGoalMinutes * 60`. The current streak runs back from today, or from yesterday when today's goal is not met yet, so an unfinished day never reads as a broken streak.
 
 ## Conventions
 
 - All components are functional React components with TypeScript interfaces for props.
 - Styles use `StyleSheet.create()`; dynamic values (theme colors, safe-area insets) are merged in via style arrays.
-- Colors always come from `useThemeColors()` so dark mode works everywhere. Primary green is #2E7D32 (light) / #4CAF50 (dark).
-- The status bar always sits on a green header: tab screens extend their green header under the status bar with `useSafeAreaInsets().top` padding, the surah reader uses the native Stack header, and the root layout pins `<StatusBar style="light" />`. Preserve this invariant when adding screens.
+- Colors always come from `useThemeColors()`. Two themes ship: **Mushaf** (warm paper, light) and **Practice** (near-black, dark), selected by `settings.theme`. Primary green is #1F5236 (Mushaf) / #4ADE80 (Practice).
+- **The old green-status-bar invariant is retired.** There is no filled green header in either theme; screens sit on the page background, pad with `useSafeAreaInsets().top` themselves, and the root layout drives `<StatusBar>` from the active theme (`dark` for Mushaf, `light` for Practice).
+- No icon library and no emoji in the UI. Tab and action icons are labelled geometric `<View>` marks — a circle in Mushaf, a rounded square in Practice.
 - Arabic text renders RTL using `flexDirection: "row-reverse"` with `flexWrap: "wrap"`.
 - Responsive design via `useWindowDimensions()` — adds horizontal padding on screens wider than 768px.
 - Emoji used for tab icons and UI elements (no icon library dependency).
@@ -70,7 +81,7 @@ bun run scripts/download-quran.ts        # Regenerate bundled Quran data (defaul
 
 1. **Word-level data model** — Arabic text is split into individual word tokens at load time (`splitArabicIntoWords`), so the word-meaning feature can be added later without restructuring.
 2. **Fully offline via bundled JSON** — the entire Quran ships in the JS bundle. No expo-sqlite, no runtime fetch. The privacy story ("no data collected, no network") is a product feature; do not add network calls or third-party SDKs casually.
-3. **Pickthall translation** — chosen because it is public domain, avoiding redistribution-rights issues in store builds. Switching editions = rerun the download script.
+3. **Public-domain translations only** — Pickthall, Yusuf Ali and Shakir are listed in `TRANSLATION_EDITIONS`. This is a redistribution-rights constraint for store builds, not a quality judgement: Saheeh International and Maududi appear in the redesign mockups but are copyrighted and are deliberately **not** bundled. Only Pickthall's text is currently in `quran-data.json`; the other editions need the download script extended before they render.
 4. **Minimal native dependencies** — no icon library, no unused native modules; keeps the binary small and the audit surface near zero. Known-remaining `bun audit` findings are dev-toolchain-only (Expo CLI/devtools), none ship in the app.
 5. **Zustand over Context** — simpler API, no provider nesting, built-in selector support.
 
