@@ -15,7 +15,9 @@ export function WordToken({ text, wordIndex, onPress }: WordTokenProps) {
   const colors = useThemeColors();
 
   const fontFamily = arabicFont === "default" ? undefined : arabicFont;
-  const lineHeight = arabicFont === "default" ? fontSize * 1.8 : fontSize * 2.2;
+  // Amiri Quran stacks tall vowel marks (dagger alef, small high marks),
+  // so it needs more vertical room than the platform default font.
+  const lineHeight = arabicFont === "default" ? fontSize * 1.8 : fontSize * 2.0;
 
   return (
     <Pressable

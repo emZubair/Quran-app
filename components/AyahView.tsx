@@ -16,10 +16,6 @@ export function AyahView({ ayah, onWordPress }: AyahViewProps) {
 
   return (
     <View style={[styles.container, { borderBottomColor: colors.border }]}>
-      <View style={styles.ayahNumber}>
-        <Text style={styles.ayahNumberText}>{ayah.numberInSurah}</Text>
-      </View>
-
       <View style={styles.arabicRow}>
         {ayah.words.map((word) => (
           <WordToken
@@ -29,6 +25,9 @@ export function AyahView({ ayah, onWordPress }: AyahViewProps) {
             onPress={onWordPress}
           />
         ))}
+        <View style={styles.ayahNumber}>
+          <Text style={styles.ayahNumberText}>{ayah.numberInSurah}</Text>
+        </View>
       </View>
 
       {showTranslation && ayah.translation && (
@@ -48,14 +47,13 @@ const styles = StyleSheet.create({
     borderBottomColor: "#E0E0E0",
   },
   ayahNumber: {
-    alignSelf: "flex-end",
     backgroundColor: "#2E7D32",
     borderRadius: 20,
     width: 36,
     height: 36,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 8,
+    marginHorizontal: 4,
   },
   ayahNumberText: {
     color: "#fff",

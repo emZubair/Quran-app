@@ -24,6 +24,55 @@ interface RawSurah {
   }[];
 }
 
+// quran-simple omits maddah from the disconnected opening letters. Preserve
+// their marks from the Uthmani text while retaining Imlaei spelling elsewhere.
+const MUQATTAAT_WITH_MADDAH: Record<string, string> = {
+  "2:1": "الٓمٓ",
+  "3:1": "الٓمٓ",
+  "7:1": "الٓمٓصٓ",
+  "10:1": "الٓر",
+  "11:1": "الٓر",
+  "12:1": "الٓر",
+  "13:1": "الٓمٓر",
+  "14:1": "الٓر",
+  "15:1": "الٓر",
+  "19:1": "كٓهيعٓصٓ",
+  "26:1": "طسٓمٓ",
+  "27:1": "طسٓ",
+  "28:1": "طسٓمٓ",
+  "29:1": "الٓمٓ",
+  "30:1": "الٓمٓ",
+  "31:1": "الٓمٓ",
+  "32:1": "الٓمٓ",
+  "36:1": "يسٓ",
+  "38:1": "صٓ",
+  "40:1": "حمٓ",
+  "41:1": "حمٓ",
+  "42:1": "حمٓ",
+  "42:2": "عٓسٓقٓ",
+  "43:1": "حمٓ",
+  "44:1": "حمٓ",
+  "45:1": "حمٓ",
+  "46:1": "حمٓ",
+  "50:1": "قٓ",
+  "68:1": "نٓ",
+};
+
+function normalizeArabicText(
+  text: string,
+  surahNumber: number,
+  ayahNumber: number,
+): string {
+  const markedMuqattaat = MUQATTAAT_WITH_MADDAH[`${surahNumber}:${ayahNumber}`];
+  const textWithMaddah = markedMuqattaat
+    ? text.replace(/^\S+/, markedMuqattaat)
+    : text;
+
+  // U+0670 already represents the standing fatha (superscript alef).
+  // Some source text prefixes it with U+064E, causing both marks to render.
+  return textWithMaddah.replace(/\u064E\u0670/g, "\u0670");
+}
+
 function splitArabicIntoWords(text: string): AyahWord[] {
   return text
     .trim()
@@ -51,13 +100,16 @@ export function useQuranData(surahNumber: number) {
         return;
       }
 
-      const merged: Ayah[] = surah.ayahs.map((a) => ({
-        number: a.number,
-        numberInSurah: a.numberInSurah,
-        text: a.text,
-        words: splitArabicIntoWords(a.text),
-        translation: a.translation,
-      }));
+      const merged: Ayah[] = surah.ayahs.map((a) => {
+        const text = normalizeArabicText(a.text, surahNumber, a.numberInSurah);
+        return {
+          number: a.number,
+          numberInSurah: a.numberInSurah,
+          text,
+          words: splitArabicIntoWords(text),
+          translation: a.translation,
+        };
+      });
 
       setAyahs(merged);
     } catch (e: any) {

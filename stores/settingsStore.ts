@@ -1,12 +1,20 @@
 import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export type ArabicFont = "default" | "IndopakNastaleeq";
+export type ArabicFont = "AmiriQuran" | "default";
 
 export const ARABIC_FONT_OPTIONS: { value: ArabicFont; label: string }[] = [
-  { value: "default", label: "Default (Uthmani)" },
-  { value: "IndopakNastaleeq", label: "IndoPak Nastaleeq" },
+  { value: "AmiriQuran", label: "Amiri Quran" },
+  { value: "default", label: "System default" },
 ];
+
+const VALID_FONTS = ARABIC_FONT_OPTIONS.map((o) => o.value);
+
+function normalizeFont(value: unknown): ArabicFont {
+  return VALID_FONTS.includes(value as ArabicFont)
+    ? (value as ArabicFont)
+    : "AmiriQuran";
+}
 
 interface SettingsState {
   fontSize: number;
@@ -29,7 +37,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   showTranslation: true,
   translationLanguage: "en",
   darkMode: false,
-  arabicFont: "default" as ArabicFont,
+  arabicFont: "AmiriQuran" as ArabicFont,
 
   setFontSize: (size) => {
     set({ fontSize: size });
@@ -71,7 +79,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
         showTranslation,
         translationLanguage,
         darkMode: darkMode ?? false,
-        arabicFont: arabicFont ?? "default",
+        arabicFont: normalizeFont(arabicFont),
       });
     }
   },

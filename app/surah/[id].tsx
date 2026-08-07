@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import {
   FlatList,
   View,
@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useLocalSearchParams, Stack, useRouter } from "expo-router";
 import { AyahView } from "../../components/AyahView";
-import { useQuranData, Ayah } from "../../hooks/useQuranData";
+import { useQuranData } from "../../hooks/useQuranData";
 import { useBookmarkStore } from "../../stores/bookmarkStore";
 import { SURAH_LIST } from "../../data/quranMeta";
 import { useThemeColors } from "../../hooks/useThemeColors";
@@ -33,7 +33,7 @@ export default function SurahScreen() {
     if (surah) {
       setLastRead(surahNumber, 1);
     }
-  }, [surahNumber]);
+  }, [surah, surahNumber, setLastRead]);
 
   function toggleBookmark() {
     if (bookmarked) {
@@ -63,9 +63,11 @@ export default function SurahScreen() {
           },
         ]}
       >
-        <Text style={[styles.bismillah, { color: colors.primary }]}>
-          {surahNumber !== 9 ? "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" : ""}
-        </Text>
+        {surahNumber !== 1 && surahNumber !== 9 && (
+          <Text style={[styles.bismillah, { color: colors.primary }]}>
+            بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ
+          </Text>
+        )}
         <Text style={[styles.surahTitle, { color: colors.text }]}>
           {surah.name}
         </Text>
