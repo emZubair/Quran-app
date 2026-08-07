@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>
+@font-face { font-family: "AmiriQuran"; src: url("assets/fonts/AmiriQuran-Regular.ttf") format("truetype"); font-display: swap; }
+body { margin: 0; background: #EDEDED; }
+a { color: #2E7D32; }
+a:hover { color: #1B5E20; }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#EDEDED;padding:48px 56px 96px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif;box-sizing:border-box">
+
+  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:40px">
+    <div style="font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#8A8A8A">Recreated from source — expo router / react native</div>
+    <div style="font-size:30px;font-weight:600;color:#1B1B1B;letter-spacing:-.01em">القرآن الكريم — current UI</div>
+    <div style="font-size:15px;color:#666;max-width:640px;text-wrap:pretty">Every screen below is a 1:1 rebuild of the styles in <span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#E2E2E2;padding:1px 5px;border-radius:4px">app/</span> and <span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#E2E2E2;padding:1px 5px;border-radius:4px">components/</span> — same colors, spacing, type sizes and emoji icons as the running app. Frames are 390 × 844 (iPhone 14).</div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:44px;align-items:flex-start">
+
+    <!-- ══════════ 1. SURAH LIST ══════════ -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <div style="font-size:14px;font-weight:600;color:#1B1B1B">Surah list</div>
+        <div style="font:11px ui-monospace,Menlo,monospace;color:#8A8A8A">app/(tabs)/index.tsx</div>
+      </div>
+      <div data-screen-label="Surah list" style="width:390px;height:844px;background:#fff;border-radius:30px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.14);display:flex;flex-direction:column;position:relative">
+
+        <div style="background:#2E7D32;padding-top:40px;padding-bottom:20px;display:flex;flex-direction:column;align-items:center">
+          <div style="height:27px;width:100%;box-sizing:border-box;padding:0 30px;display:flex;align-items:center;justify-content:space-between;margin-top:-6px;margin-bottom:6px">
+            <div style="font-size:15px;font-weight:600;color:#fff;letter-spacing:-.02em">9:41</div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:17px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:15px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:24px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,.55);box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#fff;border-radius:1px"></div></div>
+            </div>
+          </div>
+          <div style="font-size:32px;color:#fff;font-weight:700;line-height:1.25;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">القرآن الكريم</div>
+          <div style="font-size:14px;color:#C8E6C9;margin-top:4px">The Noble Quran</div>
+        </div>
+
+        <div style="background:#E8F5E9;border-bottom:0.5px solid #C8E6C9;padding:12px 16px">
+          <div style="font-size:15px;font-weight:500;color:#2E7D32">📖 Continue Reading: Al-Baqara</div>
+        </div>
+
+        <div style="margin:12px;border-radius:10px;background:#F5F5F5;display:flex;align-items:center">
+          <div style="flex:1;padding:12px 16px;font-size:15px;color:#888">Search surah by name or number...</div>
+        </div>
+
+        <div style="flex:1;overflow:hidden;background:#fff">
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #E0E0E0">
+            <div style="width:40px;height:40px;border-radius:20px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#2E7D32">1</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#1B1B1B">Al-Fatiha</div><div style="font-size:13px;color:#888;margin-top:2px">The Opening • 7 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#2E7D32;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">الفاتحة</div><div style="font-size:12px;color:#888;margin-top:2px">Meccan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #E0E0E0">
+            <div style="width:40px;height:40px;border-radius:20px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#2E7D32">2</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#1B1B1B">Al-Baqara</div><div style="font-size:13px;color:#888;margin-top:2px">The Cow • 286 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#2E7D32;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">البقرة</div><div style="font-size:12px;color:#888;margin-top:2px">Medinan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #E0E0E0">
+            <div style="width:40px;height:40px;border-radius:20px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#2E7D32">3</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#1B1B1B">Aal-Imran</div><div style="font-size:13px;color:#888;margin-top:2px">The Family of Imran • 200 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#2E7D32;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">آل عمران</div><div style="font-size:12px;color:#888;margin-top:2px">Medinan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #E0E0E0">
+            <div style="width:40px;height:40px;border-radius:20px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#2E7D32">4</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#1B1B1B">An-Nisa</div><div style="font-size:13px;color:#888;margin-top:2px">The Women • 176 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#2E7D32;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">النساء</div><div style="font-size:12px;color:#888;margin-top:2px">Medinan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #E0E0E0;background:#F5F5F5">
+            <div style="width:40px;height:40px;border-radius:20px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#2E7D32">5</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#1B1B1B">Al-Ma'ida</div><div style="font-size:13px;color:#888;margin-top:2px">The Table Spread • 120 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#2E7D32;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">المائدة</div><div style="font-size:12px;color:#888;margin-top:2px">Medinan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #E0E0E0">
+            <div style="width:40px;height:40px;border-radius:20px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#2E7D32">6</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#1B1B1B">Al-An'am</div><div style="font-size:13px;color:#888;margin-top:2px">The Cattle • 165 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#2E7D32;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">الأنعام</div><div style="font-size:12px;color:#888;margin-top:2px">Meccan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #E0E0E0">
+            <div style="width:40px;height:40px;border-radius:20px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#2E7D32">7</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#1B1B1B">Al-A'raf</div><div style="font-size:13px;color:#888;margin-top:2px">The Heights • 206 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#2E7D32;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">الأعراف</div><div style="font-size:12px;color:#888;margin-top:2px">Meccan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #E0E0E0">
+            <div style="width:40px;height:40px;border-radius:20px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#2E7D32">8</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#1B1B1B">Al-Anfal</div><div style="font-size:13px;color:#888;margin-top:2px">The Spoils of War • 75 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#2E7D32;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">الأنفال</div><div style="font-size:12px;color:#888;margin-top:2px">Medinan</div></div>
+          </div>
+        </div>
+
+        <div style="height:56px;padding-bottom:6px;background:#fff;border-top:0.5px solid #E0E0E0;display:flex;box-sizing:border-box">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">📖</span><span style="font-size:10px;color:#2E7D32">Surahs</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">🔖</span><span style="font-size:10px;color:#888">Bookmarks</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">⚙️</span><span style="font-size:10px;color:#888">Settings</span></div>
+        </div>
+        <div style="position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#1B1B1B;opacity:.28"></div>
+      </div>
+    </div>
+
+    <!-- ══════════ 2. SURAH READER ══════════ -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <div style="font-size:14px;font-weight:600;color:#1B1B1B">Surah reader</div>
+        <div style="font:11px ui-monospace,Menlo,monospace;color:#8A8A8A">app/surah/[id].tsx · AyahView · WordToken</div>
+      </div>
+      <div data-screen-label="Surah reader" style="width:390px;height:844px;background:#fff;border-radius:30px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.14);display:flex;flex-direction:column;position:relative">
+
+        <div style="background:#2E7D32">
+          <div style="height:47px;box-sizing:border-box;padding:14px 30px 0;display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:15px;font-weight:600;color:#fff;letter-spacing:-.02em">9:41</div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:17px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:15px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:24px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,.55);box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#fff;border-radius:1px"></div></div>
+            </div>
+          </div>
+          <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 8px">
+            <div style="padding:8px;margin-right:8px;font-size:16px;font-weight:500;color:#fff">← Back</div>
+            <div style="position:absolute;left:0;right:0;text-align:center;font-size:17px;font-weight:600;color:#fff;pointer-events:none">Al-Baqara</div>
+            <div style="padding:8px;font-size:22px;line-height:1;z-index:1">📑</div>
+          </div>
+        </div>
+
+        <div style="flex:1;overflow:hidden;background:#fff">
+          <div style="background:#E8F5E9;border-bottom:0.5px solid #C8E6C9;padding:24px 16px;display:flex;flex-direction:column;align-items:center">
+            <div style="font-size:26px;color:#2E7D32;margin-bottom:12px;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif;line-height:1.6">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div style="font-size:36px;color:#1B1B1B;font-weight:700;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif;line-height:1.35">البقرة</div>
+            <div style="font-size:16px;color:#555;margin-top:4px">Al-Baqara — The Cow</div>
+            <div style="font-size:13px;color:#888;margin-top:4px">Medinan • 286 Ayahs</div>
+          </div>
+
+          <div style="padding:16px;border-bottom:0.5px solid #E0E0E0;display:flex;flex-direction:column">
+            <div style="align-self:flex-end;background:#2E7D32;border-radius:20px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><span style="color:#fff;font-size:14px;font-weight:600">1</span></div>
+            <div style="display:flex;flex-direction:row-reverse;flex-wrap:wrap;justify-content:flex-start;align-items:center">
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">الم</span>
+            </div>
+            <div style="margin-top:12px;font-size:15px;color:#555;line-height:24px">Alif. Lam. Mim.</div>
+          </div>
+
+          <div style="padding:16px;border-bottom:0.5px solid #E0E0E0;display:flex;flex-direction:column">
+            <div style="align-self:flex-end;background:#2E7D32;border-radius:20px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><span style="color:#fff;font-size:14px;font-weight:600">2</span></div>
+            <div style="display:flex;flex-direction:row-reverse;flex-wrap:wrap;justify-content:flex-start;align-items:center">
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">ذَٰلِكَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">الْكِتَابُ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">لَا</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">رَيْبَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">ۛ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">فِيهِ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">ۛ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">هُدًى</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B;background:rgba(46,125,50,.15)">لِلْمُتَّقِينَ</span>
+            </div>
+            <div style="margin-top:12px;font-size:15px;color:#555;line-height:24px">This is the Scripture whereof there is no doubt, a guidance unto those who ward off (evil).</div>
+          </div>
+
+          <div style="padding:16px;border-bottom:0.5px solid #E0E0E0;display:flex;flex-direction:column">
+            <div style="align-self:flex-end;background:#2E7D32;border-radius:20px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><span style="color:#fff;font-size:14px;font-weight:600">3</span></div>
+            <div style="display:flex;flex-direction:row-reverse;flex-wrap:wrap;justify-content:flex-start;align-items:center">
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">الَّذِينَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">يُؤْمِنُونَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">بِالْغَيْبِ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">وَيُقِيمُونَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">الصَّلَاةَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">وَمِمَّا</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">رَزَقْنَاهُمْ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#1B1B1B">يُنْفِقُونَ</span>
+            </div>
+            <div style="margin-top:12px;font-size:15px;color:#555;line-height:24px">Who believe in the Unseen, and establish worship, and spend of that We have bestowed upon them;</div>
+          </div>
+        </div>
+        <div style="position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#1B1B1B;opacity:.28"></div>
+      </div>
+    </div>
+
+    <!-- ══════════ 3. BOOKMARKS ══════════ -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <div style="font-size:14px;font-weight:600;color:#1B1B1B">Bookmarks</div>
+        <div style="font:11px ui-monospace,Menlo,monospace;color:#8A8A8A">app/(tabs)/bookmarks.tsx</div>
+      </div>
+      <div data-screen-label="Bookmarks" style="width:390px;height:844px;background:#fff;border-radius:30px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.14);display:flex;flex-direction:column;position:relative">
+
+        <div style="background:#2E7D32;padding:40px 20px 20px">
+          <div style="height:27px;display:flex;align-items:center;justify-content:space-between;margin-top:-6px;margin-bottom:6px;padding:0 10px">
+            <div style="font-size:15px;font-weight:600;color:#fff;letter-spacing:-.02em">9:41</div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:17px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:15px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:24px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,.55);box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#fff;border-radius:1px"></div></div>
+            </div>
+          </div>
+          <div style="font-size:22px;font-weight:700;color:#fff">🔖 Bookmarks</div>
+        </div>
+
+        <div style="flex:1;overflow:hidden;background:#fff">
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #E0E0E0">
+            <div style="flex:1;min-width:0">
+              <div style="font-size:16px;font-weight:600;color:#1B1B1B">Al-Baqara</div>
+              <div style="font-size:13px;color:#888;margin-top:2px">Surah 2 • Page 1</div>
+              <div style="font-size:12px;color:#888;margin-top:2px">8/6/2026</div>
+            </div>
+            <div style="padding:8px;font-size:18px;color:#888">✕</div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #E0E0E0">
+            <div style="flex:1;min-width:0">
+              <div style="font-size:16px;font-weight:600;color:#1B1B1B">Al-Kahf</div>
+              <div style="font-size:13px;color:#888;margin-top:2px">Surah 18 • Page 1</div>
+              <div style="font-size:12px;color:#888;margin-top:2px">8/1/2026</div>
+            </div>
+            <div style="padding:8px;font-size:18px;color:#888">✕</div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #E0E0E0">
+            <div style="flex:1;min-width:0">
+              <div style="font-size:16px;font-weight:600;color:#1B1B1B">Ya-Sin</div>
+              <div style="font-size:13px;color:#888;margin-top:2px">Surah 36 • Page 1</div>
+              <div style="font-size:12px;color:#888;margin-top:2px">7/28/2026</div>
+            </div>
+            <div style="padding:8px;font-size:18px;color:#888">✕</div>
+          </div>
+        </div>
+
+        <div style="height:56px;padding-bottom:6px;background:#fff;border-top:0.5px solid #E0E0E0;display:flex;box-sizing:border-box">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">📖</span><span style="font-size:10px;color:#888">Surahs</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">🔖</span><span style="font-size:10px;color:#2E7D32">Bookmarks</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">⚙️</span><span style="font-size:10px;color:#888">Settings</span></div>
+        </div>
+        <div style="position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#1B1B1B;opacity:.28"></div>
+      </div>
+    </div>
+
+    <!-- ══════════ 4. BOOKMARKS EMPTY ══════════ -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <div style="font-size:14px;font-weight:600;color:#1B1B1B">Bookmarks — empty</div>
+        <div style="font:11px ui-monospace,Menlo,monospace;color:#8A8A8A">app/(tabs)/bookmarks.tsx</div>
+      </div>
+      <div data-screen-label="Bookmarks empty" style="width:390px;height:844px;background:#fff;border-radius:30px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.14);display:flex;flex-direction:column;position:relative">
+
+        <div style="background:#2E7D32;padding:40px 20px 20px">
+          <div style="height:27px;display:flex;align-items:center;justify-content:space-between;margin-top:-6px;margin-bottom:6px;padding:0 10px">
+            <div style="font-size:15px;font-weight:600;color:#fff;letter-spacing:-.02em">9:41</div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:17px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:15px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:24px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,.55);box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#fff;border-radius:1px"></div></div>
+            </div>
+          </div>
+          <div style="font-size:22px;font-weight:700;color:#fff">🔖 Bookmarks</div>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px;background:#fff">
+          <div style="font-size:48px;margin-bottom:16px;line-height:1">🔖</div>
+          <div style="font-size:18px;font-weight:600;color:#555">No bookmarks yet</div>
+          <div style="font-size:14px;text-align:center;margin-top:8px;color:#888;line-height:1.4">Tap the bookmark icon while reading a surah to save your place.</div>
+        </div>
+
+        <div style="height:56px;padding-bottom:6px;background:#fff;border-top:0.5px solid #E0E0E0;display:flex;box-sizing:border-box">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">📖</span><span style="font-size:10px;color:#888">Surahs</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">🔖</span><span style="font-size:10px;color:#2E7D32">Bookmarks</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">⚙️</span><span style="font-size:10px;color:#888">Settings</span></div>
+        </div>
+        <div style="position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#1B1B1B;opacity:.28"></div>
+      </div>
+    </div>
+
+    <!-- ══════════ 5. SETTINGS ══════════ -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <div style="font-size:14px;font-weight:600;color:#1B1B1B">Settings</div>
+        <div style="font:11px ui-monospace,Menlo,monospace;color:#8A8A8A">app/(tabs)/settings.tsx</div>
+      </div>
+      <div data-screen-label="Settings" style="width:390px;height:844px;background:#fff;border-radius:30px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.14);display:flex;flex-direction:column;position:relative">
+
+        <div style="background:#2E7D32;padding:40px 20px 20px">
+          <div style="height:27px;display:flex;align-items:center;justify-content:space-between;margin-top:-6px;margin-bottom:6px;padding:0 10px">
+            <div style="font-size:15px;font-weight:600;color:#fff;letter-spacing:-.02em">9:41</div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:17px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:15px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:24px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,.55);box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#fff;border-radius:1px"></div></div>
+            </div>
+          </div>
+          <div style="font-size:22px;font-weight:700;color:#fff">⚙️ Settings</div>
+        </div>
+
+        <div style="flex:1;overflow:hidden;background:#fff">
+          <div style="padding:20px;border-bottom:0.5px solid #E0E0E0">
+            <div style="font-size:16px;font-weight:600;color:#1B1B1B;margin-bottom:12px">Arabic Font Size</div>
+            <div style="display:flex;align-items:center">
+              <div style="font-size:18px;font-weight:700;color:#2E7D32;width:40px;text-align:center;flex:none">28</div>
+              <div style="flex:1;margin-left:12px">
+                <div style="display:flex;align-items:center;justify-content:center;padding:8px 0"><span style="font-family:'AmiriQuran',serif;font-size:28px;color:#1B1B1B;white-space:nowrap;line-height:1.9">بِسْمِ اللَّهِ</span></div>
+                <div style="display:flex;justify-content:space-between;margin-top:8px">
+                  <span style="font-size:18px;font-weight:600;padding:8px 20px;border-radius:8px;color:#2E7D32;background:#E8F5E9">A−</span>
+                  <span style="font-size:18px;font-weight:600;padding:8px 20px;border-radius:8px;color:#2E7D32;background:#E8F5E9">A+</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:20px;border-bottom:0.5px solid #E0E0E0">
+            <div style="font-size:16px;font-weight:600;color:#1B1B1B;margin-bottom:12px">Arabic Font</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:10px;border:1.5px solid #2E7D32;background:#E8F5E9;margin-bottom:10px">
+              <span style="font-size:15px;font-weight:700;color:#2E7D32">Amiri Quran</span>
+              <span style="font-size:22px;font-family:'AmiriQuran',serif;color:#1B1B1B;line-height:1.9">بِسْمِ اللَّهِ</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:10px;border:1.5px solid #E0E0E0;background:transparent;margin-bottom:10px">
+              <span style="font-size:15px;font-weight:400;color:#1B1B1B">System default</span>
+              <span style="font-size:22px;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif;color:#1B1B1B;line-height:1.6">بِسْمِ اللَّهِ</span>
+            </div>
+          </div>
+
+          <div style="padding:20px;border-bottom:0.5px solid #E0E0E0">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:16px;font-weight:600;color:#1B1B1B">Show Translation</div>
+              <div style="width:51px;height:31px;border-radius:16px;background:#C8E6C9;display:flex;align-items:center;justify-content:flex-end;padding:2px;box-sizing:border-box;flex:none"><div style="width:27px;height:27px;border-radius:14px;background:#2E7D32;box-shadow:0 1px 3px rgba(0,0,0,.25)"></div></div>
+            </div>
+          </div>
+
+          <div style="padding:20px;border-bottom:0.5px solid #E0E0E0">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:16px;font-weight:600;color:#1B1B1B">Dark Mode</div>
+              <div style="width:51px;height:31px;border-radius:16px;background:#DDD;display:flex;align-items:center;justify-content:flex-start;padding:2px;box-sizing:border-box;flex:none"><div style="width:27px;height:27px;border-radius:14px;background:#f4f3f4;box-shadow:0 1px 3px rgba(0,0,0,.25)"></div></div>
+            </div>
+          </div>
+
+          <div style="padding:20px 20px 40px">
+            <div style="font-size:16px;font-weight:600;color:#1B1B1B;margin-bottom:8px">About</div>
+            <div style="font-size:13px;line-height:20px;margin-bottom:4px;color:#888">Quran text (Imlaei / standard script) from the Tanzil project (tanzil.net).</div>
+            <div style="font-size:13px;line-height:20px;margin-bottom:4px;color:#888">English translation: Marmaduke Pickthall, 1930 (public domain).</div>
+            <div style="font-size:13px;line-height:20px;margin-bottom:4px;color:#888">Data compiled via the Al Quran Cloud API (alquran.cloud).</div><div style="font-size:13px;line-height:20px;margin-bottom:4px;color:#888">Arabic typeface: Amiri Quran (SIL Open Font License).</div><div style="font-size:13px;line-height:20px;margin-bottom:4px;color:#888">Version 1.0.0 • No ads • No tracking — everything stays on your device.</div>
+          </div>
+        </div>
+
+        <div style="height:56px;padding-bottom:6px;background:#fff;border-top:0.5px solid #E0E0E0;display:flex;box-sizing:border-box">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">📖</span><span style="font-size:10px;color:#888">Surahs</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">🔖</span><span style="font-size:10px;color:#888">Bookmarks</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">⚙️</span><span style="font-size:10px;color:#2E7D32">Settings</span></div>
+        </div>
+        <div style="position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#1B1B1B;opacity:.28"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════ DARK MODE ══════════ -->
+  <div style="margin-top:64px;display:flex;flex-direction:column;gap:6px">
+    <div style="font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#8A8A8A">Settings → Dark Mode</div>
+    <div style="font-size:22px;font-weight:600;color:#1B1B1B">Dark theme</div>
+    <div style="font-size:14px;color:#666;max-width:560px">Palette from <span style="font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#E2E2E2;padding:1px 5px;border-radius:4px">hooks/useThemeColors.ts</span> — <span style="font-family:ui-monospace,Menlo,monospace;font-size:12px">darkColors</span>.</div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:44px;align-items:flex-start;margin-top:24px">
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-size:14px;font-weight:600;color:#1B1B1B">Surah list — dark</div>
+      <div data-screen-label="Surah list dark" style="width:390px;height:844px;background:#121212;border-radius:30px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.2);display:flex;flex-direction:column;position:relative">
+        <div style="background:#4CAF50;padding-top:40px;padding-bottom:20px;display:flex;flex-direction:column;align-items:center">
+          <div style="height:27px;width:100%;box-sizing:border-box;padding:0 30px;display:flex;align-items:center;justify-content:space-between;margin-top:-6px;margin-bottom:6px">
+            <div style="font-size:15px;font-weight:600;color:#fff;letter-spacing:-.02em">9:41</div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:17px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:15px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:24px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,.55);box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#fff;border-radius:1px"></div></div>
+            </div>
+          </div>
+          <div style="font-size:32px;color:#fff;font-weight:700;line-height:1.25;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">القرآن الكريم</div>
+          <div style="font-size:14px;color:#C8E6C9;margin-top:4px">The Noble Quran</div>
+        </div>
+
+        <div style="background:#1A2E1A;border-bottom:0.5px solid #1B3A1D;padding:12px 16px">
+          <div style="font-size:15px;font-weight:500;color:#4CAF50">📖 Continue Reading: Al-Baqara</div>
+        </div>
+
+        <div style="margin:12px;border-radius:10px;background:#2A2A2A;display:flex;align-items:center">
+          <div style="flex:1;padding:12px 16px;font-size:15px;color:#888">Search surah by name or number...</div>
+        </div>
+
+        <div style="flex:1;overflow:hidden;background:#121212">
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #333">
+            <div style="width:40px;height:40px;border-radius:20px;background:#1A2E1A;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#4CAF50">1</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#E8E8E8">Al-Fatiha</div><div style="font-size:13px;color:#888;margin-top:2px">The Opening • 7 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#4CAF50;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">الفاتحة</div><div style="font-size:12px;color:#888;margin-top:2px">Meccan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #333">
+            <div style="width:40px;height:40px;border-radius:20px;background:#1A2E1A;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#4CAF50">2</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#E8E8E8">Al-Baqara</div><div style="font-size:13px;color:#888;margin-top:2px">The Cow • 286 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#4CAF50;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">البقرة</div><div style="font-size:12px;color:#888;margin-top:2px">Medinan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #333">
+            <div style="width:40px;height:40px;border-radius:20px;background:#1A2E1A;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#4CAF50">3</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#E8E8E8">Aal-Imran</div><div style="font-size:13px;color:#888;margin-top:2px">The Family of Imran • 200 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#4CAF50;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">آل عمران</div><div style="font-size:12px;color:#888;margin-top:2px">Medinan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #333">
+            <div style="width:40px;height:40px;border-radius:20px;background:#1A2E1A;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#4CAF50">4</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#E8E8E8">An-Nisa</div><div style="font-size:13px;color:#888;margin-top:2px">The Women • 176 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#4CAF50;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">النساء</div><div style="font-size:12px;color:#888;margin-top:2px">Medinan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #333">
+            <div style="width:40px;height:40px;border-radius:20px;background:#1A2E1A;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#4CAF50">5</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#E8E8E8">Al-Ma'ida</div><div style="font-size:13px;color:#888;margin-top:2px">The Table Spread • 120 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#4CAF50;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">المائدة</div><div style="font-size:12px;color:#888;margin-top:2px">Medinan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #333">
+            <div style="width:40px;height:40px;border-radius:20px;background:#1A2E1A;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#4CAF50">6</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#E8E8E8">Al-An'am</div><div style="font-size:13px;color:#888;margin-top:2px">The Cattle • 165 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#4CAF50;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">الأنعام</div><div style="font-size:12px;color:#888;margin-top:2px">Meccan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #333">
+            <div style="width:40px;height:40px;border-radius:20px;background:#1A2E1A;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#4CAF50">7</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#E8E8E8">Al-A'raf</div><div style="font-size:13px;color:#888;margin-top:2px">The Heights • 206 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#4CAF50;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">الأعراف</div><div style="font-size:12px;color:#888;margin-top:2px">Meccan</div></div>
+          </div>
+          <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid #333">
+            <div style="width:40px;height:40px;border-radius:20px;background:#1A2E1A;display:flex;align-items:center;justify-content:center;margin-right:12px;flex:none"><span style="font-size:14px;font-weight:600;color:#4CAF50">8</span></div>
+            <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:#E8E8E8">Al-Anfal</div><div style="font-size:13px;color:#888;margin-top:2px">The Spoils of War • 75 Ayahs</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:20px;color:#4CAF50;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif">الأنفال</div><div style="font-size:12px;color:#888;margin-top:2px">Medinan</div></div>
+          </div>
+        </div>
+
+        <div style="height:56px;padding-bottom:6px;background:#1E1E1E;border-top:0.5px solid #333;display:flex;box-sizing:border-box">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">📖</span><span style="font-size:10px;color:#4CAF50">Surahs</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">🔖</span><span style="font-size:10px;color:#888">Bookmarks</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">⚙️</span><span style="font-size:10px;color:#888">Settings</span></div>
+        </div>
+        <div style="position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#fff;opacity:.4"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-size:14px;font-weight:600;color:#1B1B1B">Surah reader — dark</div>
+      <div data-screen-label="Surah reader dark" style="width:390px;height:844px;background:#121212;border-radius:30px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.2);display:flex;flex-direction:column;position:relative">
+        <div style="background:#4CAF50">
+          <div style="height:47px;box-sizing:border-box;padding:14px 30px 0;display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:15px;font-weight:600;color:#fff;letter-spacing:-.02em">9:41</div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:17px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:15px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:24px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,.55);box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#fff;border-radius:1px"></div></div>
+            </div>
+          </div>
+          <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 8px">
+            <div style="padding:8px;margin-right:8px;font-size:16px;font-weight:500;color:#fff">← Back</div>
+            <div style="position:absolute;left:0;right:0;text-align:center;font-size:17px;font-weight:600;color:#fff;pointer-events:none">Al-Baqara</div>
+            <div style="padding:8px;font-size:22px;line-height:1;z-index:1">🔖</div>
+          </div>
+        </div>
+
+        <div style="flex:1;overflow:hidden;background:#121212">
+          <div style="background:#1A2E1A;border-bottom:0.5px solid #1B3A1D;padding:24px 16px;display:flex;flex-direction:column;align-items:center">
+            <div style="font-size:26px;color:#4CAF50;margin-bottom:12px;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif;line-height:1.6">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div style="font-size:36px;color:#E8E8E8;font-weight:700;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif;line-height:1.35">البقرة</div>
+            <div style="font-size:16px;color:#B0B0B0;margin-top:4px">Al-Baqara — The Cow</div>
+            <div style="font-size:13px;color:#888;margin-top:4px">Medinan • 286 Ayahs</div>
+          </div>
+
+          <div style="padding:16px;border-bottom:0.5px solid #333;display:flex;flex-direction:column">
+            <div style="align-self:flex-end;background:#2E7D32;border-radius:20px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><span style="color:#fff;font-size:14px;font-weight:600">1</span></div>
+            <div style="display:flex;flex-direction:row-reverse;flex-wrap:wrap;justify-content:flex-start;align-items:center">
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">الم</span>
+            </div>
+            <div style="margin-top:12px;font-size:15px;color:#A0A0A0;line-height:24px">Alif. Lam. Mim.</div>
+          </div>
+
+          <div style="padding:16px;border-bottom:0.5px solid #333;display:flex;flex-direction:column">
+            <div style="align-self:flex-end;background:#2E7D32;border-radius:20px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><span style="color:#fff;font-size:14px;font-weight:600">2</span></div>
+            <div style="display:flex;flex-direction:row-reverse;flex-wrap:wrap;justify-content:flex-start;align-items:center">
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">ذَٰلِكَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">الْكِتَابُ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">لَا</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">رَيْبَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">ۛ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">فِيهِ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">ۛ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">هُدًى</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">لِلْمُتَّقِينَ</span>
+            </div>
+            <div style="margin-top:12px;font-size:15px;color:#A0A0A0;line-height:24px">This is the Scripture whereof there is no doubt, a guidance unto those who ward off (evil).</div>
+          </div>
+
+          <div style="padding:16px;border-bottom:0.5px solid #333;display:flex;flex-direction:column">
+            <div style="align-self:flex-end;background:#2E7D32;border-radius:20px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><span style="color:#fff;font-size:14px;font-weight:600">3</span></div>
+            <div style="display:flex;flex-direction:row-reverse;flex-wrap:wrap;justify-content:flex-start;align-items:center">
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">الَّذِينَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">يُؤْمِنُونَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">بِالْغَيْبِ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">وَيُقِيمُونَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">الصَّلَاةَ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">وَمِمَّا</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">رَزَقْنَاهُمْ</span>
+              <span style="padding:2px 4px;border-radius:4px;font-family:'AmiriQuran',serif;font-size:28px;line-height:56px;color:#E8E8E8">يُنْفِقُونَ</span>
+            </div>
+            <div style="margin-top:12px;font-size:15px;color:#A0A0A0;line-height:24px">Who believe in the Unseen, and establish worship, and spend of that We have bestowed upon them;</div>
+          </div>
+        </div>
+        <div style="position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#fff;opacity:.4"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-size:14px;font-weight:600;color:#1B1B1B">Settings — dark</div>
+      <div data-screen-label="Settings dark" style="width:390px;height:844px;background:#121212;border-radius:30px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.2);display:flex;flex-direction:column;position:relative">
+        <div style="background:#4CAF50;padding:40px 20px 20px">
+          <div style="height:27px;display:flex;align-items:center;justify-content:space-between;margin-top:-6px;margin-bottom:6px;padding:0 10px">
+            <div style="font-size:15px;font-weight:600;color:#fff;letter-spacing:-.02em">9:41</div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:17px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:15px;height:11px;border-radius:2px;background:#fff"></div>
+              <div style="width:24px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,.55);box-sizing:border-box;padding:1.5px"><div style="width:70%;height:100%;background:#fff;border-radius:1px"></div></div>
+            </div>
+          </div>
+          <div style="font-size:22px;font-weight:700;color:#fff">⚙️ Settings</div>
+        </div>
+
+        <div style="flex:1;overflow:hidden;background:#121212">
+          <div style="padding:20px;border-bottom:0.5px solid #333">
+            <div style="font-size:16px;font-weight:600;color:#E8E8E8;margin-bottom:12px">Arabic Font Size</div>
+            <div style="display:flex;align-items:center">
+              <div style="font-size:18px;font-weight:700;color:#4CAF50;width:40px;text-align:center;flex:none">28</div>
+              <div style="flex:1;margin-left:12px">
+                <div style="display:flex;align-items:center;justify-content:center;padding:8px 0"><span style="font-family:'AmiriQuran',serif;font-size:28px;color:#E8E8E8;white-space:nowrap;line-height:1.9">بِسْمِ اللَّهِ</span></div>
+                <div style="display:flex;justify-content:space-between;margin-top:8px">
+                  <span style="font-size:18px;font-weight:600;padding:8px 20px;border-radius:8px;color:#4CAF50;background:#1A2E1A">A−</span>
+                  <span style="font-size:18px;font-weight:600;padding:8px 20px;border-radius:8px;color:#4CAF50;background:#1A2E1A">A+</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:20px;border-bottom:0.5px solid #333">
+            <div style="font-size:16px;font-weight:600;color:#E8E8E8;margin-bottom:12px">Arabic Font</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:10px;border:1.5px solid #4CAF50;background:#1A2E1A;margin-bottom:10px">
+              <span style="font-size:15px;font-weight:700;color:#4CAF50">Amiri Quran</span>
+              <span style="font-size:22px;font-family:'AmiriQuran',serif;color:#E8E8E8;line-height:1.9">بِسْمِ اللَّهِ</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:10px;border:1.5px solid #333;background:transparent;margin-bottom:10px">
+              <span style="font-size:15px;font-weight:400;color:#E8E8E8">System default</span>
+              <span style="font-size:22px;font-family:'SF Arabic','Geeza Pro',-apple-system,sans-serif;color:#E8E8E8;line-height:1.6">بِسْمِ اللَّهِ</span>
+            </div>
+          </div>
+
+          <div style="padding:20px;border-bottom:0.5px solid #333">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:16px;font-weight:600;color:#E8E8E8">Show Translation</div>
+              <div style="width:51px;height:31px;border-radius:16px;background:#1B3A1D;display:flex;align-items:center;justify-content:flex-end;padding:2px;box-sizing:border-box;flex:none"><div style="width:27px;height:27px;border-radius:14px;background:#4CAF50;box-shadow:0 1px 3px rgba(0,0,0,.4)"></div></div>
+            </div>
+          </div>
+
+          <div style="padding:20px;border-bottom:0.5px solid #333">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:16px;font-weight:600;color:#E8E8E8">Dark Mode</div>
+              <div style="width:51px;height:31px;border-radius:16px;background:#1B3A1D;display:flex;align-items:center;justify-content:flex-end;padding:2px;box-sizing:border-box;flex:none"><div style="width:27px;height:27px;border-radius:14px;background:#4CAF50;box-shadow:0 1px 3px rgba(0,0,0,.4)"></div></div>
+            </div>
+          </div>
+
+          <div style="padding:20px 20px 40px">
+            <div style="font-size:16px;font-weight:600;color:#E8E8E8;margin-bottom:8px">About</div>
+            <div style="font-size:13px;line-height:20px;margin-bottom:4px;color:#888">Quran text (Imlaei / standard script) from the Tanzil project (tanzil.net).</div>
+            <div style="font-size:13px;line-height:20px;margin-bottom:4px;color:#888">English translation: Marmaduke Pickthall, 1930 (public domain).</div>
+            <div style="font-size:13px;line-height:20px;margin-bottom:4px;color:#888">Data compiled via the Al Quran Cloud API (alquran.cloud).</div><div style="font-size:13px;line-height:20px;margin-bottom:4px;color:#888">Arabic typeface: Amiri Quran (SIL Open Font License).</div><div style="font-size:13px;line-height:20px;margin-bottom:4px;color:#888">Version 1.0.0 • No ads • No tracking — everything stays on your device.</div>
+          </div>
+        </div>
+
+        <div style="height:56px;padding-bottom:6px;background:#1E1E1E;border-top:0.5px solid #333;display:flex;box-sizing:border-box">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">📖</span><span style="font-size:10px;color:#888">Surahs</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">🔖</span><span style="font-size:10px;color:#888">Bookmarks</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font-size:22px;line-height:1">⚙️</span><span style="font-size:10px;color:#4CAF50">Settings</span></div>
+        </div>
+        <div style="position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#fff;opacity:.4"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════ TOKENS ══════════ -->
+  <div style="margin-top:72px;display:flex;flex-direction:column;gap:18px;max-width:1080px">
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <div style="font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#8A8A8A">hooks/useThemeColors.ts</div>
+      <div style="font-size:22px;font-weight:600;color:#1B1B1B">Palette in use</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px">
+      <div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #DEDEDE"><div style="height:56px;background:#2E7D32"></div><div style="padding:10px 12px"><div style="font-size:12px;font-weight:600;color:#1B1B1B">primary</div><div style="font:11px ui-monospace,Menlo,monospace;color:#888">#2E7D32</div></div></div>
+      <div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #DEDEDE"><div style="height:56px;background:#C8E6C9"></div><div style="padding:10px 12px"><div style="font-size:12px;font-weight:600;color:#1B1B1B">primaryLight</div><div style="font:11px ui-monospace,Menlo,monospace;color:#888">#C8E6C9</div></div></div>
+      <div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #DEDEDE"><div style="height:56px;background:#E8F5E9"></div><div style="padding:10px 12px"><div style="font-size:12px;font-weight:600;color:#1B1B1B">primaryLighter</div><div style="font:11px ui-monospace,Menlo,monospace;color:#888">#E8F5E9</div></div></div>
+      <div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #DEDEDE"><div style="height:56px;background:#1B1B1B"></div><div style="padding:10px 12px"><div style="font-size:12px;font-weight:600;color:#1B1B1B">text</div><div style="font:11px ui-monospace,Menlo,monospace;color:#888">#1B1B1B</div></div></div>
+      <div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #DEDEDE"><div style="height:56px;background:#555"></div><div style="padding:10px 12px"><div style="font-size:12px;font-weight:600;color:#1B1B1B">textSecondary</div><div style="font:11px ui-monospace,Menlo,monospace;color:#888">#555</div></div></div>
+      <div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #DEDEDE"><div style="height:56px;background:#888"></div><div style="padding:10px 12px"><div style="font-size:12px;font-weight:600;color:#1B1B1B">textMuted</div><div style="font:11px ui-monospace,Menlo,monospace;color:#888">#888</div></div></div>
+      <div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #DEDEDE"><div style="height:56px;background:#E0E0E0"></div><div style="padding:10px 12px"><div style="font-size:12px;font-weight:600;color:#1B1B1B">border</div><div style="font:11px ui-monospace,Menlo,monospace;color:#888">#E0E0E0</div></div></div>
+      <div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #DEDEDE"><div style="height:56px;background:#4CAF50"></div><div style="padding:10px 12px"><div style="font-size:12px;font-weight:600;color:#1B1B1B">primary · dark</div><div style="font:11px ui-monospace,Menlo,monospace;color:#888">#4CAF50</div></div></div>
+      <div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #DEDEDE"><div style="height:56px;background:#121212"></div><div style="padding:10px 12px"><div style="font-size:12px;font-weight:600;color:#1B1B1B">background · dark</div><div style="font:11px ui-monospace,Menlo,monospace;color:#888">#121212</div></div></div>
+      <div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #DEDEDE"><div style="height:56px;background:#1E1E1E"></div><div style="padding:10px 12px"><div style="font-size:12px;font-weight:600;color:#1B1B1B">surface · dark</div><div style="font:11px ui-monospace,Menlo,monospace;color:#888">#1E1E1E</div></div></div>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+</body>
+</html>
