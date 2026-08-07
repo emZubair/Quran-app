@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SurahListItem } from "../../components/SurahListItem";
 import { SURAH_LIST } from "../../data/quranMeta";
 import { useBookmarkStore } from "../../stores/bookmarkStore";
@@ -17,6 +17,7 @@ import { useThemeColors } from "../../hooks/useThemeColors";
 export default function SurahListScreen() {
   const router = useRouter();
   const colors = useThemeColors();
+  const insets = useSafeAreaInsets();
   const [search, setSearch] = useState("");
   const searchRef = useRef<TextInput>(null);
   const lastReadSurah = useBookmarkStore((s) => s.lastReadSurah);
@@ -33,11 +34,14 @@ export default function SurahListScreen() {
   }, [search]);
 
   return (
-    <SafeAreaView
-      style={[styles.safe, { backgroundColor: colors.background }]}
-      edges={["top"]}
-    >
-      <View style={[styles.header, { backgroundColor: colors.primary }]}>
+    <View style={[styles.safe, { backgroundColor: colors.background }]}>
+      {/* Green header extends under the status bar (see StatusBar in root layout) */}
+      <View
+        style={[
+          styles.header,
+          { backgroundColor: colors.primary, paddingTop: insets.top + 20 },
+        ]}
+      >
         <Text style={styles.title}>القرآن الكريم</Text>
         <Text style={styles.subtitle}>The Noble Quran</Text>
       </View>
@@ -97,7 +101,7 @@ export default function SurahListScreen() {
         )}
         contentContainerStyle={styles.list}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 

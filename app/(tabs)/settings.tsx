@@ -1,10 +1,17 @@
 import React from "react";
-import { View, Text, Switch, Pressable, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  View,
+  Text,
+  Switch,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Constants from "expo-constants";
 import {
   useSettingsStore,
   ARABIC_FONT_OPTIONS,
-  ArabicFont,
 } from "../../stores/settingsStore";
 import { useThemeColors } from "../../hooks/useThemeColors";
 
@@ -20,145 +27,175 @@ export default function SettingsScreen() {
     setArabicFont,
   } = useSettingsStore();
   const colors = useThemeColors();
+  const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView
-      style={[styles.safe, { backgroundColor: colors.background }]}
-      edges={["top"]}
-    >
-      <View style={[styles.header, { backgroundColor: colors.primary }]}>
+    <View style={[styles.safe, { backgroundColor: colors.background }]}>
+      <View
+        style={[
+          styles.header,
+          { backgroundColor: colors.primary, paddingTop: insets.top + 20 },
+        ]}
+      >
         <Text style={styles.title}>⚙️ Settings</Text>
       </View>
 
-      <View style={[styles.section, { borderBottomColor: colors.border }]}>
-        <Text style={[styles.sectionTitle, { color: colors.text }]}>
-          Arabic Font Size
-        </Text>
-        <View style={styles.sliderRow}>
-          <Text style={[styles.sliderLabel, { color: colors.primary }]}>
-            {fontSize}
+      <ScrollView>
+        <View style={[styles.section, { borderBottomColor: colors.border }]}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+            Arabic Font Size
           </Text>
-          <View style={styles.sliderContainer}>
-            <View style={styles.slider}>
-              <Text
-                style={[
-                  styles.previewText,
-                  {
-                    color: colors.text,
-                    fontSize,
-                    fontFamily:
-                      arabicFont === "default" ? undefined : arabicFont,
-                  },
-                ]}
-                numberOfLines={1}
-              >
-                بِسْمِ ٱللَّهِ
-              </Text>
-            </View>
-            <View style={styles.sliderButtons}>
-              <Text
-                style={[
-                  styles.sliderBtn,
-                  {
-                    color: colors.primary,
-                    backgroundColor: colors.primaryLighter,
-                  },
-                ]}
-                onPress={() => setFontSize(Math.max(18, fontSize - 2))}
-              >
-                A−
-              </Text>
-              <Text
-                style={[
-                  styles.sliderBtn,
-                  {
-                    color: colors.primary,
-                    backgroundColor: colors.primaryLighter,
-                  },
-                ]}
-                onPress={() => setFontSize(Math.min(48, fontSize + 2))}
-              >
-                A+
-              </Text>
+          <View style={styles.sliderRow}>
+            <Text style={[styles.sliderLabel, { color: colors.primary }]}>
+              {fontSize}
+            </Text>
+            <View style={styles.sliderContainer}>
+              <View style={styles.slider}>
+                <Text
+                  style={[
+                    styles.previewText,
+                    {
+                      color: colors.text,
+                      fontSize,
+                      fontFamily:
+                        arabicFont === "default" ? undefined : arabicFont,
+                    },
+                  ]}
+                  numberOfLines={1}
+                >
+                  بِسْمِ اللَّهِ
+                </Text>
+              </View>
+              <View style={styles.sliderButtons}>
+                <Text
+                  style={[
+                    styles.sliderBtn,
+                    {
+                      color: colors.primary,
+                      backgroundColor: colors.primaryLighter,
+                    },
+                  ]}
+                  onPress={() => setFontSize(Math.max(18, fontSize - 2))}
+                >
+                  A−
+                </Text>
+                <Text
+                  style={[
+                    styles.sliderBtn,
+                    {
+                      color: colors.primary,
+                      backgroundColor: colors.primaryLighter,
+                    },
+                  ]}
+                  onPress={() => setFontSize(Math.min(48, fontSize + 2))}
+                >
+                  A+
+                </Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
 
-      <View style={[styles.section, { borderBottomColor: colors.border }]}>
-        <Text style={[styles.sectionTitle, { color: colors.text }]}>
-          Arabic Font
-        </Text>
-        {ARABIC_FONT_OPTIONS.map((option) => (
-          <Pressable
-            key={option.value}
-            style={[
-              styles.fontOption,
-              {
-                backgroundColor:
-                  arabicFont === option.value
-                    ? colors.primaryLighter
-                    : "transparent",
-                borderColor:
-                  arabicFont === option.value ? colors.primary : colors.border,
-              },
-            ]}
-            onPress={() => setArabicFont(option.value)}
-          >
-            <Text
+        <View style={[styles.section, { borderBottomColor: colors.border }]}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+            Arabic Font
+          </Text>
+          {ARABIC_FONT_OPTIONS.map((option) => (
+            <Pressable
+              key={option.value}
               style={[
-                styles.fontOptionLabel,
+                styles.fontOption,
                 {
-                  color:
-                    arabicFont === option.value ? colors.primary : colors.text,
-                  fontWeight: arabicFont === option.value ? "700" : "400",
+                  backgroundColor:
+                    arabicFont === option.value
+                      ? colors.primaryLighter
+                      : "transparent",
+                  borderColor:
+                    arabicFont === option.value
+                      ? colors.primary
+                      : colors.border,
                 },
               ]}
+              onPress={() => setArabicFont(option.value)}
             >
-              {option.label}
-            </Text>
-            <Text
-              style={{
-                fontSize: 22,
-                fontFamily:
-                  option.value === "default" ? undefined : option.value,
-                color: colors.text,
-              }}
-            >
-              بِسْمِ ٱللَّهِ
-            </Text>
-          </Pressable>
-        ))}
-      </View>
-
-      <View style={[styles.section, { borderBottomColor: colors.border }]}>
-        <View style={styles.toggleRow}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
-            Show Translation
-          </Text>
-          <Switch
-            value={showTranslation}
-            onValueChange={setShowTranslation}
-            trackColor={{ false: "#DDD", true: colors.primaryLight }}
-            thumbColor={showTranslation ? colors.primary : "#f4f3f4"}
-          />
+              <Text
+                style={[
+                  styles.fontOptionLabel,
+                  {
+                    color:
+                      arabicFont === option.value
+                        ? colors.primary
+                        : colors.text,
+                    fontWeight: arabicFont === option.value ? "700" : "400",
+                  },
+                ]}
+              >
+                {option.label}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 22,
+                  fontFamily:
+                    option.value === "default" ? undefined : option.value,
+                  color: colors.text,
+                }}
+              >
+                بِسْمِ اللَّهِ
+              </Text>
+            </Pressable>
+          ))}
         </View>
-      </View>
 
-      <View style={[styles.section, { borderBottomColor: colors.border }]}>
-        <View style={styles.toggleRow}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
-            Dark Mode
-          </Text>
-          <Switch
-            value={darkMode}
-            onValueChange={setDarkMode}
-            trackColor={{ false: "#DDD", true: colors.primaryLight }}
-            thumbColor={darkMode ? colors.primary : "#f4f3f4"}
-          />
+        <View style={[styles.section, { borderBottomColor: colors.border }]}>
+          <View style={styles.toggleRow}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>
+              Show Translation
+            </Text>
+            <Switch
+              value={showTranslation}
+              onValueChange={setShowTranslation}
+              trackColor={{ false: "#DDD", true: colors.primaryLight }}
+              thumbColor={showTranslation ? colors.primary : "#f4f3f4"}
+            />
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+
+        <View style={[styles.section, { borderBottomColor: colors.border }]}>
+          <View style={styles.toggleRow}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>
+              Dark Mode
+            </Text>
+            <Switch
+              value={darkMode}
+              onValueChange={setDarkMode}
+              trackColor={{ false: "#DDD", true: colors.primaryLight }}
+              thumbColor={darkMode ? colors.primary : "#f4f3f4"}
+            />
+          </View>
+        </View>
+
+        <View style={styles.about}>
+          <Text style={[styles.aboutTitle, { color: colors.text }]}>About</Text>
+          <Text style={[styles.aboutText, { color: colors.textMuted }]}>
+            Quran text (Imlaei / standard script) from the Tanzil project
+            (tanzil.net).
+          </Text>
+          <Text style={[styles.aboutText, { color: colors.textMuted }]}>
+            English translation: Marmaduke Pickthall, 1930 (public domain).
+          </Text>
+          <Text style={[styles.aboutText, { color: colors.textMuted }]}>
+            Data compiled via the Al Quran Cloud API (alquran.cloud).
+          </Text>
+          <Text style={[styles.aboutText, { color: colors.textMuted }]}>
+            Arabic typeface: Amiri Quran (SIL Open Font License).
+          </Text>
+          <Text style={[styles.aboutText, { color: colors.textMuted }]}>
+            Version {Constants.expoConfig?.version ?? "1.0.0"} • No ads • No
+            tracking — everything stays on your device.
+          </Text>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -232,5 +269,19 @@ const styles = StyleSheet.create({
   },
   fontOptionLabel: {
     fontSize: 15,
+  },
+  about: {
+    padding: 20,
+    paddingBottom: 40,
+  },
+  aboutTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginBottom: 8,
+  },
+  aboutText: {
+    fontSize: 13,
+    lineHeight: 20,
+    marginBottom: 4,
   },
 });

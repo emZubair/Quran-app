@@ -1,13 +1,14 @@
 import React from "react";
 import { FlatList, Pressable, View, Text, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useBookmarkStore, Bookmark } from "../../stores/bookmarkStore";
 import { useThemeColors } from "../../hooks/useThemeColors";
 
 export default function BookmarksScreen() {
   const router = useRouter();
   const colors = useThemeColors();
+  const insets = useSafeAreaInsets();
   const bookmarks = useBookmarkStore((s) => s.bookmarks);
   const removeBookmark = useBookmarkStore((s) => s.removeBookmark);
 
@@ -50,11 +51,13 @@ export default function BookmarksScreen() {
   }
 
   return (
-    <SafeAreaView
-      style={[styles.safe, { backgroundColor: colors.background }]}
-      edges={["top"]}
-    >
-      <View style={[styles.header, { backgroundColor: colors.primary }]}>
+    <View style={[styles.safe, { backgroundColor: colors.background }]}>
+      <View
+        style={[
+          styles.header,
+          { backgroundColor: colors.primary, paddingTop: insets.top + 20 },
+        ]}
+      >
         <Text style={styles.title}>🔖 Bookmarks</Text>
       </View>
 
@@ -76,7 +79,7 @@ export default function BookmarksScreen() {
           contentContainerStyle={styles.list}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 

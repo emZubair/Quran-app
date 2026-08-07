@@ -1,32 +1,32 @@
 {
   "expo": {
-    "name": "quran-app",
+    "name": "Offline Al Quran (Ads Free)",
     "slug": "quran-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "impulsive.soft.quran"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#2E7D32"
       },
-      "edgeToEdgeEnabled": true,
+      "package": "impulsive.soft.quran",
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "scheme": "quran-app",
-    "plugins": ["expo-router", "expo-sqlite", "expo-font"]
+    "plugins": ["expo-router", "expo-font"]
   }
 }

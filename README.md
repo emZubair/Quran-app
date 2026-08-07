@@ -2,36 +2,38 @@
 
 [![CI](https://github.com/emZubair/Quran-app/actions/workflows/ci.yml/badge.svg)](https://github.com/emZubair/Quran-app/actions/workflows/ci.yml)
 
-A cross-platform Quran reader built with **Expo (React Native)** that runs on iOS, Android, and Web from a single codebase. Features tappable word-level Arabic text (designed for future word-by-word meanings), bookmarking, search, and a responsive layout that adapts to any screen size.
+A **fully offline**, ad-free, cross-platform Quran reader built with **Expo (React Native)** that runs on iOS, Android, and Web from a single codebase. The complete Quran text and English translation are bundled inside the app — no network connection is ever used at runtime. Features tappable word-level Arabic text (designed for future word-by-word meanings), bookmarking, search, dark mode, and a responsive layout.
 
 ---
 
 ## Features
 
-- **Full Quran** — all 114 surahs with Uthmanic Arabic text
-- **Word-level tapping** — every Arabic word is an individual pressable element (word meanings to be added in a future release)
-- **English translation** — powered by the [Al Quran Cloud API](https://alquran.cloud/api)
-- **Bookmarks** — save and manage bookmarked pages, persisted locally
-- **Last-read tracking** — automatically remembers your last position with a "Continue Reading" banner
+- **100% offline** — the complete Quran (Arabic text + English translation) ships inside the app; zero runtime network requests
+- **Full Quran** — all 114 surahs, 6,236 ayahs
+- **English translation** — Marmaduke Pickthall (1930, public domain), toggleable
+- **Word-level tapping** — every Arabic word is an individual pressable element (word meanings planned)
+- **Correct Arabic typography** — bundled Amiri Quran font renders the vowel marks (shadda/tanwin stacks, superscript alefs, small high marks) correctly on every platform; a system-font option is also available
+- **Dark mode** — full light/dark theming
+- **Bookmarks** — save and manage bookmarks, persisted locally
+- **Last-read tracking** — automatically remembers your position with a "Continue Reading" banner
 - **Search** — filter surahs by name (English or Arabic) or number
 - **Adjustable font size** — increase/decrease Arabic text size from Settings
-- **Translation toggle** — show or hide English translation
-- **Responsive layout** — flexbox-based design adapts to phones, tablets, foldables, and desktop browsers
+- **Responsive layout** — adapts to phones, tablets, foldables, and desktop browsers
+- **No ads, no tracking, no permissions** — see [PRIVACY.md](PRIVACY.md)
 
 ---
 
 ## Tech Stack
 
-| Layer              | Technology                                  |
-| ------------------ | ------------------------------------------- |
-| Framework          | [Expo](https://expo.dev) (SDK 54)           |
-| Language           | TypeScript (strict mode)                    |
-| Navigation         | [Expo Router](https://docs.expo.dev/router) |
-| State              | [Zustand](https://zustand.docs.pmnd.rs)     |
-| Persistence        | AsyncStorage                                |
-| Quran Data API     | [alquran.cloud](https://alquran.cloud/api)  |
-| Audio (planned)    | expo-av                                     |
-| Local DB (planned) | expo-sqlite                                 |
+| Layer       | Technology                                          |
+| ----------- | --------------------------------------------------- |
+| Framework   | [Expo](https://expo.dev) SDK 55 (React Native 0.83) |
+| Language    | TypeScript (strict mode)                            |
+| Navigation  | [Expo Router](https://docs.expo.dev/router)         |
+| State       | [Zustand](https://zustand.docs.pmnd.rs)             |
+| Persistence | AsyncStorage                                        |
+| Quran Data  | Bundled JSON (`data/quran-data.json`), ~2.4 MB      |
+| Fonts       | expo-font + bundled Amiri Quran (SIL OFL)           |
 
 ---
 
@@ -40,12 +42,12 @@ A cross-platform Quran reader built with **Expo (React Native)** that runs on iO
 ```
 quran-app/
 ├── app/                          # Expo Router — file-based routing
-│   ├── _layout.tsx               # Root layout: loads stores, configures Stack navigator
+│   ├── _layout.tsx               # Root layout: loads stores, fonts, Stack navigator
 │   ├── (tabs)/                   # Bottom tab navigator
 │   │   ├── _layout.tsx           # Tab bar configuration (Surahs, Bookmarks, Settings)
 │   │   ├── index.tsx             # Surah list screen — search, last-read banner
 │   │   ├── bookmarks.tsx         # Bookmarks screen — list with delete
-│   │   └── settings.tsx          # Settings screen — font size, translation toggle
+│   │   └── settings.tsx          # Settings — fonts, translation, dark mode, about
 │   └── surah/
 │       └── [id].tsx              # Surah reader — ayahs with tappable words, bookmark button
 │
@@ -55,22 +57,48 @@ quran-app/
 │   └── WordToken.tsx             # Single tappable Arabic word (Pressable)
 │
 ├── data/
-│   └── quranMeta.ts              # Static metadata for all 114 surahs
+│   ├── quranMeta.ts              # Static metadata for all 114 surahs
+│   └── quran-data.json           # Complete bundled Quran text + translation
 │
 ├── hooks/
-│   └── useQuranData.ts           # Fetches Arabic text + translation, splits into words
+│   ├── useQuranData.ts           # Loads a surah from the bundled data, splits into words
+│   └── useThemeColors.ts         # Light/dark theme palette
+│
+├── scripts/
+│   └── download-quran.ts         # Regenerates data/quran-data.json from alquran.cloud
 │
 ├── stores/                       # Zustand state stores (persisted via AsyncStorage)
 │   ├── bookmarkStore.ts          # Bookmarks + last-read position
-│   └── settingsStore.ts          # Font size, translation visibility
+│   └── settingsStore.ts          # Font size/family, translation, dark mode
 │
-├── assets/                       # App icons, splash screen, fonts
-│   └── fonts/                    # (reserved for Uthmanic script fonts)
+├── assets/                       # App icon, adaptive icon, splash, favicon
+│   └── fonts/                    # Amiri Quran font + OFL license
 │
-├── app.json                      # Expo configuration
+├── app.json                      # Expo configuration (bundle IDs, icons, splash)
+├── eas.json                      # EAS Build profiles
+├── PRIVACY.md                    # Privacy policy (no data collected)
 ├── tsconfig.json                 # TypeScript configuration
 └── package.json                  # Dependencies and scripts
 ```
+
+---
+
+## Quran Data & Attribution
+
+The app ships with a prebuilt `data/quran-data.json` containing the complete Quran:
+
+- **Arabic text:** Imlaei / modern-standard script from the [Tanzil project](https://tanzil.net) (`quran-simple` edition)
+- **English translation:** Marmaduke Pickthall, _The Meaning of the Glorious Koran_ (1930, public domain)
+- Compiled via the [Al Quran Cloud API](https://alquran.cloud/api) at build time — never at runtime
+
+To regenerate the data file (e.g., to switch translation edition):
+
+```bash
+bun run scripts/download-quran.ts              # default: en.pickthall
+bun run scripts/download-quran.ts en.sahih     # any alquran.cloud edition id
+```
+
+The script strips the Bismillah embedded in each surah's first ayah (the app renders it as a header instead), validates all 114 surahs / 6,236 ayahs, and fails loudly rather than writing incomplete data.
 
 ---
 
@@ -114,7 +142,7 @@ Install the **Expo Go** app from the App Store or Google Play, then scan the QR 
 
 ## Building for Production
 
-This project uses [EAS Build](https://docs.expo.dev/build/introduction/) for creating production binaries.
+This project uses [EAS Build](https://docs.expo.dev/build/introduction/); build profiles live in `eas.json`, and bundle identifiers (`impulsive.soft.quran`) are set in `app.json`.
 
 ### One-time setup
 
@@ -125,8 +153,8 @@ bun add -g eas-cli
 # Log in to your Expo account
 eas login
 
-# Initialize EAS in the project (creates eas.json)
-eas build:configure
+# Link this project to your Expo account (adds extra.eas.projectId to app.json)
+eas init
 ```
 
 ### Build for iOS
@@ -144,8 +172,8 @@ eas build --platform ios --profile production
 ### Build for Android
 
 ```bash
-# Development build (.apk for testing)
-eas build --platform android --profile development
+# Preview build (.apk for testing)
+eas build --platform android --profile preview
 
 # Production build (.aab for Google Play)
 eas build --platform android --profile production
@@ -164,6 +192,8 @@ bunx expo export --platform web
 
 ## Publishing to App Stores
 
+Both stores require a **privacy policy URL** — host [PRIVACY.md](PRIVACY.md) (e.g., GitHub Pages) and paste the URL into each console. Since the app collects no data, the Play Data Safety form and Apple privacy questionnaire are both "no data collected."
+
 ### iOS — Apple App Store
 
 ```bash
@@ -175,7 +205,7 @@ You'll need:
 
 - Apple Developer account
 - App created in [App Store Connect](https://appstoreconnect.apple.com)
-- App metadata (description, screenshots, etc.) filled in
+- App metadata (description, screenshots — including iPad, since tablet support is enabled)
 
 ### Android — Google Play Store
 
@@ -220,38 +250,32 @@ Users receive the update on next app launch. See [EAS Update docs](https://docs.
 
 ## Environment & Configuration
 
-| File            | Purpose                                                 |
-| --------------- | ------------------------------------------------------- |
-| `app.json`      | Expo config: app name, icons, splash, platform settings |
-| `eas.json`      | EAS Build profiles (created by `eas build:configure`)   |
-| `tsconfig.json` | TypeScript with strict mode, extends Expo's base config |
-
----
-
-## API
-
-The app fetches Quran data from the **Al Quran Cloud API** (free, no API key required):
-
-- Arabic text: `GET https://api.alquran.cloud/v1/surah/{number}/quran-uthmani`
-- Translation: `GET https://api.alquran.cloud/v1/surah/{number}/en.asad`
-
-[Full API documentation →](https://alquran.cloud/api)
+| File            | Purpose                                                     |
+| --------------- | ----------------------------------------------------------- |
+| `app.json`      | Expo config: name, bundle IDs, icons, splash, platform bits |
+| `eas.json`      | EAS Build profiles (development, preview, production)       |
+| `tsconfig.json` | TypeScript with strict mode, extends Expo's base config     |
+| `PRIVACY.md`    | Privacy policy — host it and link it in both store consoles |
 
 ---
 
 ## Roadmap
 
 - [ ] Word-by-word meanings popup on tap
-- [ ] Audio recitation playback (expo-av)
+- [ ] Audio recitation playback (expo-audio)
 - [x] Offline mode with bundled Quran data
 - [ ] Multiple translation languages
 - [x] Dark mode / theming
 - [ ] Juz / Para navigation
 - [ ] Tajweed color-coded text
-- [ ] Custom Uthmanic script fonts
+- [x] Correct Arabic font rendering (Amiri Quran)
 
 ---
 
 ## License
 
 Private project. All rights reserved.
+
+Quran text: Tanzil project (tanzil.net) — used with attribution per Tanzil terms.
+English translation: Marmaduke Pickthall (public domain).
+Arabic font: Amiri Quran by the Amiri Project — [SIL Open Font License 1.1](assets/fonts/OFL.txt).

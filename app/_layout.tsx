@@ -10,17 +10,16 @@ import { useThemeColors } from "../hooks/useThemeColors";
 export default function RootLayout() {
   const loadBookmarks = useBookmarkStore((s) => s.loadBookmarks);
   const loadSettings = useSettingsStore((s) => s.loadSettings);
-  const darkMode = useSettingsStore((s) => s.darkMode);
   const colors = useThemeColors();
 
   const [fontsLoaded] = useFonts({
-    IndopakNastaleeq: require("../assets/fonts/IndopakNastaleeq.ttf"),
+    AmiriQuran: require("../assets/fonts/AmiriQuran-Regular.ttf"),
   });
 
   useEffect(() => {
     loadBookmarks();
     loadSettings();
-  }, []);
+  }, [loadBookmarks, loadSettings]);
 
   if (!fontsLoaded) {
     return (
@@ -32,7 +31,8 @@ export default function RootLayout() {
 
   return (
     <>
-      <StatusBar style={darkMode ? "dark" : "light"} />
+      {/* Status bar always sits on the green header, so icons stay light */}
+      <StatusBar style="light" />
       <Stack
         screenOptions={{
           headerStyle: { backgroundColor: colors.primary },
