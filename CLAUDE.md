@@ -87,7 +87,10 @@ bun run scripts/download-quran.ts        # Regenerate bundled Quran data (defaul
 
 ## Store Publishing
 
-- Bundle IDs: `impulsive.soft.quran` (both platforms, set in app.json). Locked once first submitted.
+- Bundle IDs (set in app.json) **differ per platform** — do not "fix" one to match the other:
+  - Android `package`: `quran.impulsivesoft.com`
+  - iOS `bundleIdentifier`: `impulsive.soft.quran`
+  - Both are locked once that platform's first store submission goes through.
 - `eas.json` has development / preview / production profiles; production auto-increments build numbers (remote version source).
 - `PRIVACY.md` is the privacy policy — must be hosted and linked in Play Console + App Store Connect.
 - Attribution for Tanzil text and Pickthall translation lives in the Settings → About section; keep it if reorganizing Settings.
