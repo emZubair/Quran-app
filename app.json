@@ -20,13 +20,20 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#2E7D32"
       },
-      "package": "impulsive.soft.quran",
+      "package": "quran.impulsivesoft.com",
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "scheme": "quran-app",
-    "plugins": ["expo-router", "expo-font"]
+    "plugins": ["expo-router", "expo-font"],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "15ff91c7-d30f-4865-8e8d-35a7a6fd7995"
+      }
+    },
+    "owner": "emzubairs-team"
   }
 }

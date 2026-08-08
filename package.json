@@ -11,6 +11,7 @@
     "format": "bunx prettier --write \"**/*.{ts,tsx,json,md}\"",
     "format:check": "bunx prettier --check \"**/*.{ts,tsx,json,md}\"",
     "typecheck": "bunx tsc --noEmit",
+    "pr": "bash scripts/create-pr.sh",
     "prepare": "husky"
   },
   "lint-staged": {
