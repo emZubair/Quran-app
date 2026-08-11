@@ -58,7 +58,10 @@ function clampFontSize(size: number): number {
  */
 function normalizeTheme(value: unknown, legacyDarkMode: unknown): Theme {
   if (value === "mushaf" || value === "practice") return value;
-  return legacyDarkMode === true ? "practice" : "mushaf";
+  if (typeof legacyDarkMode === "boolean") {
+    return legacyDarkMode ? "practice" : "mushaf";
+  }
+  return "practice";
 }
 
 function normalizeTranslations(value: unknown): string[] {
@@ -99,7 +102,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   fontSize: 28,
   showTranslation: true,
   arabicFont: "AmiriQuran" as ArabicFont,
-  theme: "mushaf" as Theme,
+  theme: "practice" as Theme,
   tajweed: false,
   wordMeanings: true,
   translations: [DEFAULT_TRANSLATION],

@@ -434,9 +434,11 @@ export default function HomeScreen() {
           <View style={{ flexDirection: "row", gap: 10 }}>
             {jumpTargets(bookmarks, lastRead).map((target) => (
               <Pressable
-                key={`${target.surah}-${target.context}`}
+                key={`${target.surah}-${target.ayah}-${target.context}`}
                 style={{ flex: 1 }}
-                onPress={() => router.push(`/surah/${target.surah}`)}
+                onPress={() =>
+                  router.push(`/surah/${target.surah}?ayah=${target.ayah}`)
+                }
               >
                 <Card style={{ padding: 14, gap: 8 }}>
                   <Text
@@ -479,20 +481,33 @@ export default function HomeScreen() {
 
 /** Two suggestions: the most recent bookmark and the last-read surah. */
 function jumpTargets(
-  bookmarks: { surahNumber: number; timestamp: number }[],
-  lastRead: { surah: number } | null,
-): { surah: number; context: string }[] {
-  const targets: { surah: number; context: string }[] = [];
+  bookmarks: {
+    surahNumber: number;
+    ayahNumber: number;
+    timestamp: number;
+  }[],
+  lastRead: { surah: number; ayah: number } | null,
+): { surah: number; ayah: number; context: string }[] {
+  const targets: { surah: number; ayah: number; context: string }[] = [];
   const newest = [...bookmarks].sort((a, b) => b.timestamp - a.timestamp)[0];
   if (newest)
-    targets.push({ surah: newest.surahNumber, context: "Bookmarked" });
+    targets.push({
+      surah: newest.surahNumber,
+      ayah: newest.ayahNumber,
+      context: `Bookmarked ayah ${newest.ayahNumber}`,
+    });
   if (lastRead && lastRead.surah !== newest?.surahNumber) {
-    targets.push({ surah: lastRead.surah, context: "Continue reading" });
+    targets.push({
+      surah: lastRead.surah,
+      ayah: lastRead.ayah,
+      context: "Continue reading",
+    });
   }
   // Al-Kahf is the conventional Friday reading; a sensible cold-start default.
-  if (targets.length === 0) targets.push({ surah: 18, context: "Suggested" });
+  if (targets.length === 0)
+    targets.push({ surah: 18, ayah: 1, context: "Suggested" });
   if (targets.length === 1 && targets[0].surah !== 36) {
-    targets.push({ surah: 36, context: "Suggested" });
+    targets.push({ surah: 36, ayah: 1, context: "Suggested" });
   }
   return targets.slice(0, 2);
 }
