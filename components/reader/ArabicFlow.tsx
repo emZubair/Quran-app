@@ -1,11 +1,111 @@
 import { Fragment } from "react";
 import { Text, View, StyleProp, TextStyle } from "react-native";
-import { useThemeColors } from "../../hooks/useThemeColors";
+import { useTajweedColors, useThemeColors } from "../../hooks/useThemeColors";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { FONTS, arabicLineHeight } from "../../lib/fonts";
+import type { TajweedColors } from "../../hooks/useThemeColors";
 import type { Ayah } from "../../hooks/useQuranData";
 
 const ARABIC_INDIC = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+const ARABIC_LETTER = /^[ء-يٱ-ۓ]$/;
+const ARABIC_MARK = /^[ً-ٰٟۖ-ۭ]$/;
+const TANWEEN = /[ً-ٌ]/;
+const IDGHAM_LETTERS = /^[يرملون]$/;
+const QALQALAH_LETTERS = /^[قطبجد]$/;
+
+type TajweedRule = keyof TajweedColors;
+
+interface ArabicCluster {
+  text: string;
+  letter: string | null;
+}
+
+interface TajweedSegment {
+  text: string;
+  rule?: TajweedRule;
+}
+
+/** Keep each Arabic base letter and its harakat in the same coloured run. */
+function arabicClusters(text: string): ArabicCluster[] {
+  const clusters: ArabicCluster[] = [];
+
+  for (const character of Array.from(text)) {
+    const previous = clusters[clusters.length - 1];
+    if (ARABIC_MARK.test(character) && previous) {
+      previous.text += character;
+    } else {
+      clusters.push({
+        text: character,
+        letter: ARABIC_LETTER.test(character) ? character : null,
+      });
+    }
+  }
+
+  return clusters;
+}
+
+function firstArabicLetter(text: string | undefined): string | null {
+  if (!text) return null;
+  return arabicClusters(text).find((cluster) => cluster.letter)?.letter ?? null;
+}
+
+/**
+ * Derive the rules represented by our four-colour key from the marks already
+ * present in the bundled Imlaei text. This intentionally avoids colouring
+ * unmarked, context-dependent stopping rules that the source cannot prove.
+ */
+function tajweedSegments(
+  text: string,
+  followingText?: string,
+): TajweedSegment[] {
+  const clusters = arabicClusters(text);
+
+  return clusters.map((cluster, index) => {
+    if (!cluster.letter) return { text: cluster.text };
+
+    const previous = clusters.slice(0, index).findLast((item) => item.letter);
+    const remainingLetters = clusters
+      .slice(index + 1)
+      .filter((item) => item.letter);
+    const next =
+      remainingLetters[0]?.letter ?? firstArabicLetter(followingText);
+
+    if (/^[نم]$/.test(cluster.letter) && cluster.text.includes("ّ")) {
+      return { text: cluster.text, rule: "ghunnah" };
+    }
+
+    if (QALQALAH_LETTERS.test(cluster.letter) && cluster.text.includes("ْ")) {
+      return { text: cluster.text, rule: "qalqalah" };
+    }
+
+    const isMadd =
+      cluster.letter === "آ" ||
+      cluster.text.includes("ٓ") ||
+      cluster.text.includes("ٰ") ||
+      ((cluster.letter === "ا" || cluster.letter === "ى") &&
+        previous?.text.includes("َ")) ||
+      (cluster.letter === "و" && previous?.text.includes("ُ")) ||
+      (cluster.letter === "ي" && previous?.text.includes("ِ"));
+    if (isMadd) return { text: cluster.text, rule: "madd" };
+
+    const hasTanween = TANWEEN.test(cluster.text);
+    if ((cluster.letter === "ن" && cluster.text.includes("ْ")) || hasTanween) {
+      // Idgham crosses a word boundary. Fathatan may have one silent supporting
+      // alif/alif maqsura after it, which does not count as another word letter.
+      const endsWord =
+        remainingLetters.length === 0 ||
+        (hasTanween &&
+          remainingLetters.length === 1 &&
+          (next === "ا" || next === "ى"));
+      const idghamNext = endsWord ? firstArabicLetter(followingText) : null;
+      if (idghamNext && IDGHAM_LETTERS.test(idghamNext)) {
+        return { text: cluster.text, rule: "idgham" };
+      }
+    }
+
+    return { text: cluster.text };
+  });
+}
 
 export function toArabicIndic(n: number): string {
   return String(n)
@@ -46,16 +146,25 @@ function AyahMarker({
         justifyContent: "center",
         marginHorizontal: 6,
         // Nudges the ring off the baseline onto the optical centre of the run.
-        transform: [{ translateY: Math.round(fontSize * 0.08) }],
+        transform: [{ translateY: -Math.round(fontSize * 0.1) }],
       }}
     >
       <Text
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        minimumFontScale={0.7}
+        allowFontScaling={false}
         style={{
+          position: "absolute",
+          width: size,
+          height: size,
           fontFamily: FONTS.arabic,
           fontSize: Math.round(fontSize * 0.42),
-          lineHeight: Math.round(fontSize * 0.62),
+          lineHeight: size,
           color: colors.goldInk,
           textAlign: "center",
+          textAlignVertical: "center",
+          includeFontPadding: false,
         }}
       >
         {toArabicIndic(number)}
@@ -95,9 +204,11 @@ export function ArabicFlow({
   style,
 }: ArabicFlowProps) {
   const colors = useThemeColors();
+  const tajweedColors = useTajweedColors();
   const arabicFont = useSettingsStore((s) => s.arabicFont);
   const family = arabicFont === "AmiriQuran" ? FONTS.arabic : undefined;
   const practice = useSettingsStore((s) => s.theme) === "practice";
+  const tajweed = useSettingsStore((s) => s.tajweed);
 
   const lineHeight = lineHeightMultiplier
     ? Math.round(fontSize * lineHeightMultiplier)
@@ -119,10 +230,13 @@ export function ArabicFlow({
     >
       {ayahs.map((ayah) => (
         <Fragment key={ayah.number}>
-          {ayah.words.map((word) => {
+          {ayah.words.map((word, wordIndex) => {
             const isSelected =
               selected?.ayah === ayah.numberInSurah &&
               selected?.word === word.index;
+            const segments = tajweed
+              ? tajweedSegments(word.text, ayah.words[wordIndex + 1]?.text)
+              : [{ text: word.text }];
             return (
               <Text
                 key={word.index}
@@ -139,7 +253,18 @@ export function ArabicFlow({
                     : undefined
                 }
               >
-                {word.text}{" "}
+                {segments.map((segment, segmentIndex) =>
+                  segment.rule ? (
+                    <Text
+                      key={segmentIndex}
+                      style={{ color: tajweedColors[segment.rule] }}
+                    >
+                      {segment.text}
+                    </Text>
+                  ) : (
+                    segment.text
+                  ),
+                )}{" "}
               </Text>
             );
           })}

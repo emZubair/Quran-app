@@ -69,6 +69,8 @@ export default function SurahScreen() {
   const bookmarks = useBookmarkStore((s) => s.bookmarks);
   const recordReading = useStreakStore((s) => s.recordReading);
 
+  const practiceListRef = useRef<FlatList<Ayah>>(null);
+  const scrolledTarget = useRef<string | null>(null);
   const [selected, setSelected] = useState<WordRef | null>(null);
   const [visibleAyah, setVisibleAyah] = useState(
     ayahParam ? parseInt(ayahParam, 10) || 1 : 1,
@@ -77,6 +79,37 @@ export default function SurahScreen() {
   const pages = useMemo(
     () => groupByPage(surahNumber, ayahs),
     [surahNumber, ayahs],
+  );
+
+  const targetAyah = ayahParam ? parseInt(ayahParam, 10) : 1;
+  useEffect(() => {
+    if (!practice || !ayahs.length || !Number.isFinite(targetAyah)) return;
+    const index = Math.min(Math.max(targetAyah - 1, 0), ayahs.length - 1);
+    const targetKey = `${surahNumber}:${index}`;
+    if (index === 0 || scrolledTarget.current === targetKey) return;
+    scrolledTarget.current = targetKey;
+    requestAnimationFrame(() => {
+      practiceListRef.current?.scrollToIndex({ index, animated: false });
+    });
+  }, [ayahs, practice, surahNumber, targetAyah]);
+
+  const handleScrollToIndexFailed = useCallback(
+    ({
+      index,
+      averageItemLength,
+    }: {
+      index: number;
+      averageItemLength: number;
+    }) => {
+      practiceListRef.current?.scrollToOffset({
+        offset: index * averageItemLength,
+        animated: false,
+      });
+      setTimeout(() => {
+        practiceListRef.current?.scrollToIndex({ index, animated: false });
+      }, 100);
+    },
+    [],
   );
 
   // Reading time feeds the streak. Counted from mount to unmount, which is a
@@ -177,8 +210,6 @@ export default function SurahScreen() {
           title={surah.englishName}
           context={error ? "" : "Loading"}
           onBack={() => router.back()}
-          onTypePress={() => {}}
-          onJumpPress={() => {}}
         />
         <View style={styles.center}>
           {error ? (
@@ -201,12 +232,11 @@ export default function SurahScreen() {
         title={surah.englishName}
         context={context}
         onBack={() => router.back()}
-        onTypePress={() => router.push("/(tabs)/settings")}
-        onJumpPress={() => router.push("/(tabs)/browse")}
       />
 
       {practice ? (
         <FlatList
+          ref={practiceListRef}
           data={ayahs}
           keyExtractor={(item) => String(item.number)}
           ListHeaderComponent={header}
@@ -216,6 +246,7 @@ export default function SurahScreen() {
           }}
           viewabilityConfig={viewabilityConfig}
           onViewableItemsChanged={onViewableItemsChanged}
+          onScrollToIndexFailed={handleScrollToIndexFailed}
           renderItem={({ item }) => (
             <AyahBlock
               surah={surahNumber}

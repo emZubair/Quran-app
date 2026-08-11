@@ -25,7 +25,7 @@ import { FONTS, arabicLineHeight, useDisplayFonts } from "../../lib/fonts";
 import { ProgressBar } from "../../components/ui/Primitives";
 
 type MushafTab = "juz" | "surah" | "bookmarks";
-type PracticeTab = "surah" | "juz" | "page" | "saved";
+type PracticeTab = "surah" | "juz" | "page" | "bookmarks";
 type Filter = "all" | "Meccan" | "Medinan" | "short";
 
 const SHORT_SURAH_MAX_AYAHS = 20;
@@ -478,7 +478,7 @@ export default function BrowseScreen() {
         />
       );
     }
-    if (tab === "bookmarks" || tab === "saved") {
+    if (tab === "bookmarks") {
       return (
         <FlatList
           data={savedRows}
@@ -486,7 +486,7 @@ export default function BrowseScreen() {
           renderItem={BookmarkRow}
           contentContainerStyle={styles.listContent}
           ListEmptyComponent={empty(
-            "No bookmarks yet. Long-press an ayah in the reader to save it.",
+            "No bookmarks yet. Use the bookmark button above an ayah to save it.",
           )}
         />
       );
@@ -570,37 +570,42 @@ export default function BrowseScreen() {
                 { backgroundColor: colors.surface, borderColor: colors.line },
               ]}
             >
-              {(["surah", "juz", "page", "saved"] as PracticeTab[]).map(
-                (key) => {
-                  const active = practiceTab === key;
-                  return (
-                    <Pressable
-                      key={key}
-                      onPress={() => setPracticeTab(key)}
-                      style={[
-                        styles.segment,
-                        active && {
-                          backgroundColor: colors.green,
-                          borderRadius: 8,
-                        },
-                      ]}
+              {(
+                [
+                  ["surah", "Surah"],
+                  ["juz", "Juz"],
+                  ["page", "Page"],
+                  ["bookmarks", "Bookmarks"],
+                ] as [PracticeTab, string][]
+              ).map(([key, label]) => {
+                const active = practiceTab === key;
+                return (
+                  <Pressable
+                    key={key}
+                    onPress={() => setPracticeTab(key)}
+                    style={[
+                      styles.segment,
+                      active && {
+                        backgroundColor: colors.green,
+                        borderRadius: 8,
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: active
+                          ? FONTS.sansBold
+                          : FONTS.sansSemiBold,
+                        fontSize: 12.5,
+                        color: active ? colors.onGreen : colors.textSecondary,
+                        textTransform: "capitalize",
+                      }}
                     >
-                      <Text
-                        style={{
-                          fontFamily: active
-                            ? FONTS.sansBold
-                            : FONTS.sansSemiBold,
-                          fontSize: 12.5,
-                          color: active ? colors.onGreen : colors.textSecondary,
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        {key}
-                      </Text>
-                    </Pressable>
-                  );
-                },
-              )}
+                      {label}
+                    </Text>
+                  </Pressable>
+                );
+              })}
             </View>
           </View>
 

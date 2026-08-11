@@ -16,31 +16,66 @@ interface AyahBlockProps {
   onShare: () => void;
 }
 
-/** 9 px geometric action mark — filled when active, outlined when not. */
-function ActionMark({
+function ActionButton({
+  kind,
   active,
-  square,
   onPress,
   label,
 }: {
+  kind: "bookmark" | "share";
   active: boolean;
-  square: boolean;
   onPress: () => void;
   label: string;
 }) {
   const colors = useThemeColors();
+  const buttonBackground = active ? colors.greenTint : "transparent";
+  const iconColor = active ? colors.green : colors.muted;
+
   return (
-    <Pressable onPress={onPress} hitSlop={12} accessibilityLabel={label}>
-      <View
-        style={{
-          width: 9,
-          height: 9,
-          borderRadius: square ? 0 : 4.5,
-          backgroundColor: active ? colors.green : "transparent",
-          borderWidth: active ? 0 : 1.5,
-          borderColor: colors.mutedFaint,
-        }}
-      />
+    <Pressable
+      onPress={onPress}
+      hitSlop={6}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={
+        kind === "bookmark" ? { selected: active } : undefined
+      }
+      style={({ pressed }) => [
+        styles.actionButton,
+        {
+          backgroundColor: buttonBackground,
+          borderColor: active ? colors.greenSoft : colors.lineAlt,
+          opacity: pressed ? 0.6 : 1,
+        },
+      ]}
+    >
+      {kind === "bookmark" ? (
+        <View
+          style={[
+            styles.bookmarkIcon,
+            {
+              backgroundColor: active ? iconColor : "transparent",
+              borderColor: iconColor,
+            },
+          ]}
+        >
+          <View
+            style={[
+              styles.bookmarkNotch,
+              {
+                backgroundColor: buttonBackground,
+                borderColor: iconColor,
+              },
+            ]}
+          />
+        </View>
+      ) : (
+        <View style={styles.shareIcon}>
+          <View style={[styles.shareBox, { borderColor: iconColor }]} />
+          <View style={[styles.shareShaft, { backgroundColor: iconColor }]} />
+          <View style={[styles.shareArrow, { borderColor: iconColor }]} />
+        </View>
+      )}
     </Pressable>
   );
 }
@@ -133,15 +168,15 @@ export function AyahBlock({
           </Text>
         </View>
         <View style={styles.actions}>
-          <ActionMark
+          <ActionButton
+            kind="bookmark"
             active={bookmarked}
-            square={false}
             onPress={onToggleBookmark}
             label={bookmarked ? "Remove bookmark" : "Bookmark ayah"}
           />
-          <ActionMark
+          <ActionButton
+            kind="share"
             active={false}
-            square
             onPress={onShare}
             label="Share ayah"
           />
@@ -201,7 +236,61 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: 8,
+  },
+  actionButton: {
+    width: 34,
+    height: 34,
+    borderWidth: 1,
+    borderRadius: 9,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  bookmarkIcon: {
+    width: 13,
+    height: 17,
+    borderWidth: 1.5,
+    borderRadius: 2,
+    overflow: "hidden",
+  },
+  bookmarkNotch: {
+    position: "absolute",
+    width: 8,
+    height: 8,
+    bottom: -5,
+    left: 1,
+    borderWidth: 1.5,
+    transform: [{ rotate: "45deg" }],
+  },
+  shareIcon: {
+    width: 18,
+    height: 18,
+  },
+  shareBox: {
+    position: "absolute",
+    width: 13,
+    height: 12,
+    left: 1,
+    bottom: 1,
+    borderWidth: 1.5,
+    borderRadius: 2,
+  },
+  shareShaft: {
+    position: "absolute",
+    width: 11,
+    height: 1.5,
+    right: 0,
+    top: 5,
+    transform: [{ rotate: "-45deg" }],
+  },
+  shareArrow: {
+    position: "absolute",
+    width: 7,
+    height: 7,
+    right: 0,
+    top: 0,
+    borderTopWidth: 1.5,
+    borderRightWidth: 1.5,
   },
   wordCard: {
     flexDirection: "row",
